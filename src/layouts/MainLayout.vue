@@ -12,10 +12,10 @@
         />
 
         <q-toolbar-title>
-          Quasar App
+          Landtify Backend
         </q-toolbar-title>
 
-        <div>Quasar v{{ $q.version }}</div>
+        <div>landify v0.1</div>
       </q-toolbar>
     </q-header>
 
@@ -28,7 +28,7 @@
         <q-item-label
           header
         >
-          Essential Links
+          Menu
         </q-item-label>
 
         <EssentialLink
@@ -51,47 +51,119 @@ import EssentialLink from 'components/EssentialLink.vue'
 
 const linksList = [
   {
-    title: 'Docs',
-    caption: 'quasar.dev',
+    title: 'Ads',
+    // caption: 'quasar.dev',
     icon: 'school',
-    link: 'https://quasar.dev'
+    link: '/ads'
   },
+  // {
+  //   title: 'Github',
+  //   // caption: 'github.com/quasarframework',
+  //   icon: 'code',
+  //   link: 'https://github.com/quasarframework'
+  // },
+  // {
+  //   title: 'Discord Chat Channel',
+  //   // caption: 'chat.quasar.dev',
+  //   icon: 'chat',
+  //   link: 'https://chat.quasar.dev'
+  // },
   {
-    title: 'Github',
-    caption: 'github.com/quasarframework',
-    icon: 'code',
-    link: 'https://github.com/quasarframework'
-  },
-  {
-    title: 'Discord Chat Channel',
-    caption: 'chat.quasar.dev',
-    icon: 'chat',
-    link: 'https://chat.quasar.dev'
-  },
-  {
-    title: 'Forum',
-    caption: 'forum.quasar.dev',
+    title: 'Lands',
+    // caption: 'forum.quasar.dev',
     icon: 'record_voice_over',
-    link: 'https://forum.quasar.dev'
+    link: '/lands'
   },
+  // {
+  //   title: 'Property',
+  //   // caption: '@quasarframework',
+  //   icon: 'rss_feed',
+  //   link: '/properties'
+  // },
   {
-    title: 'Twitter',
-    caption: '@quasarframework',
-    icon: 'rss_feed',
-    link: 'https://twitter.quasar.dev'
-  },
-  {
-    title: 'Facebook',
-    caption: '@QuasarFramework',
+    title: 'All Users & Admins',
+    // caption: '@QuasarFramework',
     icon: 'public',
-    link: 'https://facebook.quasar.dev'
+    link: '/all-users'
   },
   {
-    title: 'Quasar Awesome',
-    caption: 'Community Quasar projects',
+    title: 'User',
+    // caption: '@QuasarFramework',
+    icon: 'public',
+    link: '/user'
+  },
+  {
+    title: 'Realtors',
+    // caption: '@QuasarFramework',
+    icon: 'public',
+    link: '/realtors'
+  },
+  {
+    title: 'Private Investor',
+    // caption: '@QuasarFramework',
+    icon: 'public',
+    link: '/privateinvestor'
+  },
+  {
+    title: 'Broker',
+    // caption: '@QuasarFramework',
+    icon: 'public',
+    link: '/broker'
+  },
+  {
+    title: 'Private Lender',
+    // caption: '@QuasarFramework',
+    icon: 'public',
+    link: '/privatelender'
+  },
+  {
+    title: 'Title Company',
+    // caption: '@QuasarFramework',
+    icon: 'public',
+    link: '/titlecompany'
+  },
+  {
+    title: 'Mobile Notary',
+    // caption: '@QuasarFramework',
+    icon: 'public',
+    link: '/mobilenotary'
+  },
+  {
+    title: 'Photographer',
+    // caption: '@QuasarFramework',
+    icon: 'public',
+    link: '/photographer'
+  },
+  {
+    title: 'Drone Operator',
+    // caption: '@QuasarFramework',
+    icon: 'public',
+    link: '/droneoperator'
+  },
+  {
+    title: 'Surveyor',
+    // caption: '@QuasarFramework',
+    icon: 'public',
+    link: '/surveyor'
+  },
+  {
+    title: 'Admin',
+    // caption: '@QuasarFramework',
+    icon: 'public',
+    link: '/admin'
+  },
+  {
+    title: 'User Questions',
+    // caption: 'Community Quasar projects',
+    icon: 'record_voice_over',
+    link: '/contactus-message'
+  },
+  {
+    title: 'My Info',
+    // caption: 'Community Quasar projects',
     icon: 'favorite',
-    link: 'https://awesome.quasar.dev'
-  }
+    link: '/profile'
+  },
 ]
 
 export default defineComponent({
