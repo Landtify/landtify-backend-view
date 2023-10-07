@@ -32,7 +32,7 @@
         </div>
         <div class="row q-pt-sm">
           <div class="col-12 col-md-6 q-pl-md">
-            <q-input required class="" type="text" v-model="address" outlined hint="Address" />
+            <q-input class="" type="text" v-model="address" outlined hint="Address" />
           </div>
           <div class="col-12 col-md-6 q-pl-md">
             <q-input required outlined type="text" v-model="city" hint="City" />
@@ -57,10 +57,10 @@
         </div>
         <div class="row q-pt-sm">
           <div class="col-12 col-md-6 q-pl-md">
-            <q-input required outlined type="textarea" v-model="details" hint="Land Details(More about Land...)" />
+            <q-input outlined type="textarea" v-model="details" hint="Land Details(More about Land...)" />
           </div>
           <div class="col-12 col-md-6 q-pl-md">
-            <q-input required outlined type="textarea" v-model="terms" hint="Terms of Negotiation" />
+            <q-input outlined type="textarea" v-model="terms" hint="Terms of Negotiation" />
           </div>
         </div>
         <div class="row q-pt-sm">
@@ -167,10 +167,10 @@
         </div>
         <div class="row q-pt-sm">
           <div class="col-12 col-md-6 q-pl-md">
-            <q-input required class="" outlined v-model="realtorname" hint="Realtor Name" />
+            <q-input class="" outlined v-model="realtorname" hint="Realtor Name" />
           </div>
           <div class="col-12 col-md-6 q-pl-md">
-            <q-input required class="" outlined v-model="realtorphone" hint="Realtor Phone" />
+            <q-input class="" outlined v-model="realtorphone" hint="Realtor Phone" />
           </div>
         </div>
         <div class="row q-pt-sm">

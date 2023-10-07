@@ -30,7 +30,7 @@
           </div>
           <div class="row q-pt-sm">
             <div class="col-12 col-md-6 q-pl-md">
-              <q-input required class="" v-model="dob" outlined type="date" hint="Date of Birth" />
+              <q-input class="" v-model="dob" outlined type="date" hint="Date of Birth" />
             </div>
             <div class="col-12 col-md-6 q-pl-md">
               <q-select required outlined v-model="gender" :options="optionsGender" hint="Gender" />
@@ -51,7 +51,7 @@
           </div>
           <div class="row q-pt-sm">
             <div class="col-12 col-md-6 q-pl-md">
-              <q-input required class="" v-model="address" outlined type="textarea" hint="Address" />
+              <q-input class="" v-model="address" outlined type="textarea" hint="Address" />
             </div>
             <div class="col-12 col-md-6 q-pl-md">
               <div class="column">
