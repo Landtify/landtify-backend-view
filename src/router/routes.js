@@ -9,9 +9,9 @@ const routes = [
     component: () => import('layouts/MainLayout.vue'),
     children: [
       { path: '', component: () => import('pages/ProfilePage.vue'), meta: { requireLogin: true } },
+      // { path: '/properties', component: () => import('pages/PropertyPages.vue'), meta: { requireLogin: true } },
       { path: '/profile', component: () => import('pages/ProfilePage.vue'), meta: { requireLogin: true } },
       { path: '/all-users', component: () => import('pages/UsersPages.vue'), meta: { requireLogin: true } },
-      { path: '/properties', component: () => import('pages/PropertyPages.vue'), meta: { requireLogin: true } },
       { path: '/ads', component: () => import('pages/AdsPage.vue'), meta: { requireLogin: true } },
       { path: '/contactus-message', component: () => import('pages/ContactUsMessagePage.vue'), meta: { requireLogin: true } },
       { path: '/lands', component: () => import('pages/LandsPage.vue'), meta: { requireLogin: true } },
@@ -30,7 +30,7 @@ const routes = [
       { path: '/create-ads', component: () => import('pages/CreateAdsPage.vue'), meta: { requireLogin: true } },
       { path: '/create-user', name: 'CreateUser', component: () => import('components/users/CreateUsersPage.vue'), meta: { requireLogin: true } },
       { path: '/create-admin', name: 'CreateAdmin', component: () => import('components/users/CreateAdminPage.vue'), meta: { requireLogin: true } },
-      { path: '/create-property', name: 'CreateProperty', component: () => import('components/property/CreateAPropertyPage.vue'), meta: { requireLogin: true } },
+      // { path: '/create-property', name: 'CreateProperty', component: () => import('components/property/CreateAPropertyPage.vue'), meta: { requireLogin: true } },
       { path: '/upload-ads', name: 'UploadAds', component: () => import('components/ads/UploadAds.vue'), meta: { requireLogin: true } },
     ]
   },
