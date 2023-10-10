@@ -97,7 +97,7 @@
 
         <div class="row q-pt-lg">
           <div class="text-center full-width q-pl-md">
-            <q-btn label="Submit" type="submit" color="primary" style="width: 260px" />
+            <q-btn :loading="loadingPostAds" label="Submit" type="submit" color="primary" style="width: 260px" />
           </div>
           <!-- <q-btn label="Reset" type="reset" color="primary" flat class="q-ml-sm" /> -->
         </div>
@@ -117,6 +117,7 @@ import { useRouter } from 'vue-router'
 
 name: 'CreateAdsPage'
 
+const loadingPostAds = ref(false)
 const $q = useQuasar()
 const data = ref([])
 const picture1 = ref(null)
@@ -135,6 +136,7 @@ const useStore = useAdminStore()
 const $router = useRouter()
 
 const onSubmit = async () => {
+  loadingPostAds.value = true
   const token = useStore.getToken
   console.log(token, 'token')
   // const firstName = useStore.getFirstname
@@ -179,6 +181,7 @@ const onSubmit = async () => {
         icon: 'report_problem'
       })
     })
+    loadingPostAds.value = false
 }
 
 const onReset = () => {

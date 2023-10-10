@@ -8,7 +8,7 @@ const routes = [
     path: '/dashboard',
     component: () => import('layouts/MainLayout.vue'),
     children: [
-      { path: '', component: () => import('pages/ProfilePage.vue'), meta: { requireLogin: true } },
+      { path: '', component: () => import('pages/IndexPage.vue'), meta: { requireLogin: true } },
       // { path: '/properties', component: () => import('pages/PropertyPages.vue'), meta: { requireLogin: true } },
       { path: '/profile', component: () => import('pages/ProfilePage.vue'), meta: { requireLogin: true } },
       { path: '/all-users', component: () => import('pages/UsersPages.vue'), meta: { requireLogin: true } },

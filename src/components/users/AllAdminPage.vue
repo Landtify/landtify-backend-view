@@ -53,7 +53,7 @@
                   </div>
                   <q-separator dark />
                   <div class="col-12 q-pl-md">
-                    <q-btn class="bg-primary text-white" type="submit">Find</q-btn>
+                    <q-btn :loading="loadingFindAnyAdmin" class="bg-primary text-white" type="submit">Find</q-btn>
                   </div>
                 </q-form>
               </div>
@@ -186,7 +186,7 @@
 
               <q-card-actions align="right">
                 <q-btn flat  v-close-popup >Cancel</q-btn>
-                <q-btn @click="onDelete()" color="red" flat>Delete Admin</q-btn>
+                <q-btn :loading="loadingDeleteAnAdmin" @click="onDelete()" color="red" flat>Delete Admin</q-btn>
             </q-card-actions>
           </q-card>
         </div>
@@ -206,6 +206,8 @@ import { HttpStatusCode } from 'axios'
 
 const name= 'AllUsersPage'
 
+const loadingFindAnyAdmin = ref(false)
+const loadingDeleteAnAdmin = ref(false)
 const findAdmin = ref(false)
 const findAdmin2 = ref(false)
 const $q = useQuasar()
@@ -298,13 +300,14 @@ const loadData = () => {
 }
 
 const onFind = () => {
+  loadingFindAnyAdmin.value = true
   const token = useStore.getToken
 
   axios.get(`${base}/admin/serve/${adminid.value}`,
-    { headers: { "Authorization": `Bearer ${token}` }, })
-    .then((response) => {
-      viewMoreData.value = response.data.data
-      // console.log(find.value)
+  { headers: { "Authorization": `Bearer ${token}` }, })
+  .then((response) => {
+    viewMoreData.value = response.data.data
+    // console.log(find.value)
 
       findAdmin.value = false;
       findAdmin2.value = true;
@@ -332,6 +335,7 @@ const onFind = () => {
         icon: 'report_problem'
       })
     })
+    loadingFindAnyAdmin.value = false
 }
 
 const onReset = () => {
@@ -339,16 +343,17 @@ const onReset = () => {
 }
 
 const onDelete = () => {
+  loadingDeleteAnAdmin.value = true
   const token = useStore.getToken
 
   axios.delete(`${base}/admin/serve/${adminid.value}`,
-    { headers: { "Authorization": `Bearer ${token}` }, })
-    .then((response) => {
-      dataDelete.value = response.data
-      console.log(dataDelete.value)
-      $q.notify({
-        color: 'green-4',
-        textColor: 'white',
+  { headers: { "Authorization": `Bearer ${token}` }, })
+  .then((response) => {
+    dataDelete.value = response.data
+    console.log(dataDelete.value)
+    $q.notify({
+      color: 'green-4',
+      textColor: 'white',
         icon: 'thumb_up',
         message: dataDelete.value.message
       })
@@ -359,16 +364,17 @@ const onDelete = () => {
     })
     .catch(() => {
       // if (HttpStatusCode.Unauthorized) {
-      //   $router.push('/');
-      //   $router.go();
-      // }
-      $q.notify({
-        color: 'negative',
-        position: 'bottom',
-        message: 'User not found',
-        icon: 'report_problem'
+        //   $router.push('/');
+        //   $router.go();
+        // }
+        $q.notify({
+          color: 'negative',
+          position: 'bottom',
+          message: 'User not found',
+          icon: 'report_problem'
+        })
       })
-    })
+  loadingDeleteAnAdmin.value = false
 }
 
 onMounted(() => {

@@ -4,8 +4,8 @@
       <q-separator />
     <div class="q-gutter-y-md q-pt-md" full-width>
       <div align="right">
-        <q-btn rounded color="blue" class="q-mr-md" to="/create-lands">Post Land</q-btn>
-        <q-btn rounded color="blue" @click="goToFindLand()">Find a Land</q-btn>
+        <q-btn :loading="loadingCreateLand" rounded color="blue" class="q-mr-md" to="/create-lands">Post Land</q-btn>
+        <q-btn :loading="loadingFindLand" rounded color="blue" @click="goToFindLand()">Find a Land</q-btn>
       </div>
       <q-card class="my-land" v-for="(da, index) in data" :key="index">
         <q-card-section>
@@ -359,6 +359,8 @@ const name = 'LandsPage'
 const findLand = ref(false)
 const landid = ref('')
 const card = ref(false)
+const loadingCreateLand = ref(false)
+const loadingFindLand = ref(false)
 const slide = ref(1)
 const data = ref([])
 const viewMoreData = ref({})
@@ -458,7 +460,7 @@ const onApproved = (landid) => {
 }
 
 const onFind = () => {
-
+  loadingFindLand.value = true
   // api.get(`${base}/admin/serve/lands/${landid.value}`,
   api.get(`/admin/serve/lands/${landid.value}`,
     { headers: { "Authorization": `Bearer ${token}` }, })
@@ -483,6 +485,8 @@ const onFind = () => {
         icon: 'report_problem'
       })
     })
+
+    loadingFindLand.value = false
 }
 
 watch(() => {

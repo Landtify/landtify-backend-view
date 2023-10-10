@@ -56,7 +56,7 @@
                   </div>
                   <q-separator dark />
                   <div class="col-12 q-pl-md">
-                    <q-btn class="bg-primary text-white" type="submit">Find</q-btn>
+                    <q-btn :loading="loadingFindAnyUser" class="bg-primary text-white" type="submit">Find</q-btn>
                   </div>
                 </q-form>
               </div>
@@ -189,7 +189,7 @@
 
               <q-card-actions align="right">
                 <q-btn flat  v-close-popup >Cancel</q-btn>
-                <q-btn @click="onDelete()" color="red" flat>Delete User</q-btn>
+                <q-btn :loading="loadingDeleteAUser" @click="onDelete()" color="red" flat>Delete User</q-btn>
             </q-card-actions>
           </q-card>
         </div>
@@ -208,6 +208,8 @@ import { useRouter } from 'vue-router'
 
 const name= 'AllUsersPage'
 
+const loadingFindAnyUser = ref(false)
+const loadingDeleteAUser = ref(false)
 const findUser = ref(false)
 const findUser2 = ref(false)
 const $q = useQuasar()
@@ -292,10 +294,11 @@ const loadData = () => {
 }
 
 const onFind = () => {
+  loadingFindAnyUser.value = true
   const token = useStore.getToken
 
   axios.get(`${base}/user/${userid.value}`,
-    { headers: { "Authorization": `Bearer ${token}` }, })
+  { headers: { "Authorization": `Bearer ${token}` }, })
     .then((response) => {
       viewMoreData.value = response.data.data
       // console.log(find.value)
@@ -322,13 +325,15 @@ const onFind = () => {
         icon: 'report_problem'
       })
     })
-}
+    loadingFindAnyUser.value = false
+  }
 
 const onReset = () => {
   userid.value = null
 }
 
 const onDelete = () => {
+  loadingDeleteAUser.value = true
   const token = useStore.getToken
 
   axios.delete(`${base}/admin/serve/user/r/${userid.value}`,
@@ -355,9 +360,10 @@ const onDelete = () => {
         icon: 'report_problem'
       })
     })
-}
+    loadingDeleteAUser.value = false
+  }
 
-onMounted(() => {
+  onMounted(() => {
   loadData()
 })
 

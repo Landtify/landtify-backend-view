@@ -74,7 +74,7 @@
         </div>
         <div class="row q-pt-lg">
           <div class="text-center full-width q-pl-md">
-            <q-btn label="Submit" type="submit" color="primary" style="width: 260px" />
+            <q-btn :loading="loadingCreateUser" label="Submit" type="submit" color="primary" style="width: 260px" />
           </div>
           <!-- <q-btn label="Reset" type="reset" color="primary" flat class="q-ml-sm" /> -->
         </div>
@@ -114,6 +114,7 @@ import { useRouter } from 'vue-router'
 
 const $q = useQuasar()
 const data = ref([])
+const loadingCreateUser = ref(false)
 
 const firstname = ref('')
 const lastname = ref('')
@@ -135,6 +136,7 @@ const useStore = useAdminStore()
 const $router = useRouter()
 
 const onSubmit = () => {
+  loadingCreateUser.value = true
   // const token = useStore.getToken
   // const id = useStore.getEmail
   const fD = new FormData();
@@ -177,7 +179,8 @@ const onSubmit = () => {
         icon: 'report_problem'
       })
     })
-}
+    loadingCreateUser.value = false
+  }
 
 const onReset = () => {
   email.value = null

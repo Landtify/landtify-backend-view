@@ -273,7 +273,7 @@
 
         <div class="row q-pt-lg">
           <div class="text-center full-width q-pl-md">
-            <q-btn label="Submit" type="submit" color="primary" style="width: 260px" />
+            <q-btn :loading="loadingCreateLands" label="Submit" type="submit" color="primary" style="width: 260px" />
           </div>
           <!-- <q-btn label="Reset" type="reset" color="primary" flat class="q-ml-sm" /> -->
         </div>
@@ -310,6 +310,7 @@ const optionsStatus = [
 
 
 const $q = useQuasar()
+const loadingCreateLands = ref(false)
 const data = ref([])
 // const formData = ref({})
 // const post_by = ref('')
@@ -361,6 +362,7 @@ const useStore = useAdminStore()
 const $router = useRouter()
 
 const onSubmit = async () => {
+  loadingCreateLands.value = true
   const token = useStore.getToken
   console.log(token, 'token')
   const firstName = useStore.getFirstname
@@ -483,6 +485,8 @@ const onSubmit = async () => {
         icon: 'report_problem'
       })
     })
+
+    loadingCreateLands.value = false
 }
 
 const onReset = () => {

@@ -11,6 +11,7 @@ export const useAdminStore = defineStore('admin', {
     token: null,
     adminid: null,
     phone: null,
+    picture: null,
     admin_details: null
   }),
   // persist: true, // Note that we are using a persisted state here
@@ -22,6 +23,7 @@ export const useAdminStore = defineStore('admin', {
     getToken: (state) => state.token,
     getAdminId: (state) => state.adminid,
     getPhoneNumber: (state) => state.phone,
+    getPicture: (state) => state.picture,
     getAdminDetails: (state) => state.admin_details
   },
   actions: {
@@ -57,6 +59,7 @@ export const useAdminStore = defineStore('admin', {
       if(payload.email) this.email = payload.email;
       if(payload.adminid) this.adminid = payload.adminid;
       if (payload.phone) this.phone = payload.phone;
+      if (payload.picture) this.picture = payload.picture;
       if (payload.admin_details) this.admin_details = payload.admin_details;
     },
 
@@ -72,6 +75,7 @@ export const useAdminStore = defineStore('admin', {
       this.token = null,
       this.adminid = null,
       this.phone = null,
+      this.picture = null,
       this.admin_details = null
     },
 

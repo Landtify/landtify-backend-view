@@ -55,6 +55,14 @@
           <q-input readonly hint="Country" outlined :label="data.country" />
         </div>
       </div>
+      <div class="row q-pt-sm">
+        <div class="col-12 col-md-12 q-pl-md">
+          <q-img :src="data.picture" class="my-thumbnail" />
+        </div>
+        <!-- <div class="col-12 col-md-6 q-pl-md">
+          <q-input readonly hint="Country" outlined :label="data.country" />
+        </div> -->
+      </div>
 
 
       <!-- <div class="q-mt-md">
@@ -139,4 +147,6 @@ onMounted(() => {
 </script>
 
 <style lang="sass" scoped>
+.my-thumbnail
+  height: 400px
 </style>

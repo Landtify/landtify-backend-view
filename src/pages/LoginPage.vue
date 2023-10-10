@@ -63,7 +63,7 @@
                       <!-- <q-toggle class="text-primary" v-model="accept" label="I accept the license and terms" /> -->
 
                       <div class="q-pt-md">
-                        <q-btn class="full-width" label="Submit" type="submit" color="primary" />
+                        <q-btn :loading="loadingLogin" class="full-width" label="Submit" type="submit" color="primary" />
                         <!-- <q-btn label="Reset" type="reset" color="primary" flat class="q-ml-sm" /> -->
                       </div>
                     </q-form>
@@ -145,6 +145,7 @@ const useStore = useAdminStore()
 
   const email = ref("")
   const password = ref("")
+  const loadingLogin = ref(false)
 const resetPassword = ref(false)
 
   // mapMutations({
@@ -156,7 +157,7 @@ const resetPassword = ref(false)
 
   const $router = useRouter()
   const onSubmit = async () => {
-
+    loadingLogin.value = true
     // Get the token/cookie
     // await useStore.getSanctumCookie()
     // login admin
@@ -191,7 +192,7 @@ const resetPassword = ref(false)
         message: 'You don\'t have Permissions to view this page, this page can only be viewed by an admin user'
       })
     }
-
+    loadingLogin.value = false
   }
 
 const resetEmail = ref("")
