@@ -31,7 +31,7 @@ const routes = [
       { path: '/create-user', name: 'CreateUser', component: () => import('components/users/CreateUsersPage.vue'), meta: { requireLogin: true } },
       { path: '/create-admin', name: 'CreateAdmin', component: () => import('components/users/CreateAdminPage.vue'), meta: { requireLogin: true } },
       // { path: '/create-property', name: 'CreateProperty', component: () => import('components/property/CreateAPropertyPage.vue'), meta: { requireLogin: true } },
-      { path: '/upload-ads', name: 'UploadAds', component: () => import('components/ads/UploadAds.vue'), meta: { requireLogin: true } },
+      // { path: '/upload-ads', name: 'UploadAds', component: () => import('components/ads/UploadAds.vue'), meta: { requireLogin: true } },
     ]
   },
 
