@@ -80,7 +80,7 @@
           <q-card-actions vertical class="justify-around col-2">
             <q-btn flat round color="blue" icon="content_copy" @click="viewMore(da)">View More...</q-btn>
             <q-btn v-if="!da.approved" flat round color="accent" icon="check_circle_outline" @click="onApproved(da.landid)">Approve</q-btn>
-            <q-btn v-else flat round color="red" icon="cancel" @click="onApproved(da.landid)">Un-approve</q-btn>
+            <q-btn v-else flat round color="red" icon="cancel" @click="onUnApproved(da.landid)">Un-approve</q-btn>
           </q-card-actions>
         </q-card-section>
       </q-card>
@@ -431,6 +431,7 @@ const onApproved = (landid) => {
   // console.log(token)
   var approvedbyid = name + " " + adminid
   const formData = {
+    approved: true,
     approvedby: approvedbyid,
   }
 
@@ -439,14 +440,14 @@ const onApproved = (landid) => {
     .then((response) => {
       console.log(response)
       approved.value = response.data.data
-      console.log(approved.value)
+      // console.log(approved.value)
       $q.notify({
         color: 'green-4',
         textColor: 'white',
         icon: 'thumb_up',
         message: 'Approved successful'
       })
-      // window.location.reload();
+      window.location.reload();
     })
     .catch(() => {
       $q.notify({
@@ -455,7 +456,41 @@ const onApproved = (landid) => {
         message: 'Action not complete',
         icon: 'report_problem'
       })
-      // window.location.reload();
+      window.location.reload();
+    })
+}
+
+const onUnApproved = (landid) => {
+  const name = useStore.getFirstname + " " + useStore.getLastname
+  // console.log(token)
+  var approvedbyid = name + " " + adminid
+  const formData = {
+    approved: false,
+    approvedby: approvedbyid,
+  }
+
+  api.patch(`/admin/serve/lands/approve/${landid}`, formData,
+    { headers: { "Authorization": `Bearer ${token}` }, })
+    .then((response) => {
+      console.log(response)
+      approved.value = response.data.data
+      // console.log(approved.value)
+      $q.notify({
+        color: 'green-4',
+        textColor: 'white',
+        icon: 'thumb_up',
+        message: 'Unapproved successful'
+      })
+      window.location.reload();
+    })
+    .catch(() => {
+      $q.notify({
+        color: 'negative',
+        position: 'bottom',
+        message: 'Action not complete',
+        icon: 'report_problem'
+      })
+      window.location.reload();
     })
 }
 
