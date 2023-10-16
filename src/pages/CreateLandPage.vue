@@ -24,10 +24,10 @@
         </div>
         <div class="row q-pt-sm">
           <div class="col-12 col-md-6 q-pl-md">
-            <q-input required class="" outlined v-model="centergps" hint="Center GPS" />
+            <q-input class="" outlined v-model="centergps" hint="Center GPS" />
           </div>
           <div class="col-12 col-md-6 q-pl-md">
-            <q-input required class="" outlined v-model="cornergps" hint="Corner GPS" />
+            <q-input class="" outlined v-model="cornergps" hint="Corner GPS" />
           </div>
         </div>
         <div class="row q-pt-sm">
@@ -40,15 +40,15 @@
         </div>
         <div class="row q-pt-sm">
           <div class="col-12 col-md-6 q-pl-md">
-            <q-input required class="" v-model="province" outlined type="text" hint="Province" />
+            <q-input class="" v-model="province" outlined type="text" hint="Province" />
           </div>
           <div class="col-12 col-md-6 q-pl-md">
-            <q-input required class="" v-model="country" type="text" outlined hint="Country" />
+            <q-input class="" v-model="country" type="text" outlined hint="Country" />
           </div>
         </div>
         <div class="row q-pt-sm">
           <div class="col-12 col-md-6 q-pl-md">
-            <q-input required class="" outlined v-model="acreage" hint="Acreage(Square Feet)" />
+            <q-input class="" outlined v-model="acreage" hint="Acreage(Square Feet)" />
           </div>
           <div class="col-12 col-md-6 q-pl-md">
             <q-select :options="optionsStatus" required class="" outlined v-model="status"
@@ -300,7 +300,8 @@ const optionsLandTag = [
 
 const optionsLandType = [
   'Residential',
-  'Commercial'
+  'Commercial',
+  'Vacant Land'
 ]
 
 const optionsStatus = [
