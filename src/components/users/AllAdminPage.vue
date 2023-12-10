@@ -186,7 +186,7 @@
 
               <q-card-actions align="right">
                 <q-btn flat  v-close-popup >Cancel</q-btn>
-                <q-btn :loading="loadingDeleteAnAdmin" @click="onDelete()" color="red" flat>Delete Admin</q-btn>
+                <q-btn :loading="loadingDeleteAnAdmin" @click="onDelete(viewMoreData.adminid)" color="red" flat>Delete Admin</q-btn>
             </q-card-actions>
           </q-card>
         </div>
@@ -342,11 +342,11 @@ const onReset = () => {
   adminid.value = null
 }
 
-const onDelete = () => {
+const onDelete = (admin_id) => {
   loadingDeleteAnAdmin.value = true
   const token = useStore.getToken
 
-  axios.delete(`${base}/admin/serve/${adminid.value}`,
+  axios.delete(`${base}/admin/serve/${admin_id}`,
   { headers: { "Authorization": `Bearer ${token}` }, })
   .then((response) => {
     dataDelete.value = response.data
