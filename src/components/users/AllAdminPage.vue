@@ -346,7 +346,7 @@ const onDelete = (admin_id) => {
   loadingDeleteAnAdmin.value = true
   const token = useStore.getToken
 
-  axios.delete(`${base}/admin/serve/${admin_id}`,
+  axios.delete(`${base}/admin/serve/admin/${admin_id}`,
   { headers: { "Authorization": `Bearer ${token}` }, })
   .then((response) => {
     dataDelete.value = response.data
