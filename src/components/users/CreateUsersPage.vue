@@ -59,7 +59,7 @@
                 <q-input required class="" v-model="city" outlined type="text" hint="City" />
               </div>
               <div class="col q-pt-xs">
-                <q-input required class="" v-model="province" outlined type="text" hint="Province" />
+                <q-input required class="" v-model="province" outlined type="text" hint="State" />
               </div>
             </div>
           </div>

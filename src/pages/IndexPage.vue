@@ -6,7 +6,12 @@
       src="~assets/landtify_full.png"
       style="width: 600px; height: 200px"
       >
-      <h4>Welcome to Landtify Admin Dashboard</h4>
+      <h4>
+        LANDTIFYING YOUR DREAMS AT YOUR FINGER TIPS!
+      </h4>
+      <h6>
+        AT $1 FOR EVERY1!
+      </h6>
     </div>
       <!-- src="~assets/quasar-logo-vertical.svg" -->
   </q-page>

@@ -4,19 +4,19 @@
       <q-separator />
     <div class="q-gutter-y-md q-pt-md" full-width>
       <div align="right">
-        <q-btn :loading="loadingCreateLand" rounded color="blue" class="q-mr-md" to="/create-lands">Post Land</q-btn>
-        <q-btn :loading="loadingFindLand" rounded color="blue" @click="goToFindLand()">Find a Land</q-btn>
+        <q-btn :loading="loadingCreateLand" color="blue" class="q-mr-md" to="/create-lands">Post Land</q-btn>
+        <q-btn :loading="loadingFindLand" color="blue" @click="goToFindLand()">Find a Land</q-btn>
       </div>
       <q-card class="my-land" v-for="(da, index) in data" :key="index">
-        <q-card-section>
-          <q-img :src="da.thumbnail" class="my-thumbnail">
+        <q-card-section horizontal>
+          <q-img :src="da.thumbnail" class="col-5 my-thumbnail" fit="cover">
             <div class="absolute-bottom text-subtitle2 text-center">
-              {{ da.title }}, [{{ da.landtag }}]
+              {{ da.title == null ? 'N/A' : da.title }}, [{{ da.landtag == null ? 'N/A' : da.landtag }}]
             </div>
           </q-img>
-        </q-card-section>
-        <q-card-section horizontal>
-          <q-card-section class="q-pt-xs col-8">
+        <!-- </q-card-section>
+        <q-card-section horizontal> -->
+          <q-card-section class="q-pt-xs col-5">
             <div class="text-overline">
               <div v-if="da.approved">
                 <q-icon color="green" name="verified" />
@@ -30,17 +30,17 @@
             <q-separator />
             <div class="text-h5 q-mt-sm q-mb-xs">Land Type</div>
             <div class="text-caption text-grey">
-              {{ da.landtype }}
+              {{ da.landtype == null ? 'N/A' : da.landtype }}
             </div>
             <q-separator />
-            <div class="text-h5 q-mt-sm q-mb-xs">City, Province & Country</div>
+            <div class="text-h5 q-mt-sm q-mb-xs">City, State & Country</div>
             <div class="text-caption text-grey">
-              {{ da.city }}, {{ da.province }}, {{ da.country }}
+              {{ da.city == null ? 'N/A' : da.city }}, {{ da.province == null ? 'N/A' : da.province }}, {{ da.country == null ? 'N/A' : da.country }}
             </div>
             <q-separator />
             <div class="text-h5 q-mt-sm q-mb-xs">Details</div>
-            <div class="text-caption text-grey">
-              {{ da.details }}
+            <div class="text-caption text-grey ellipsis-3-lines">
+              {{ da.details == null ? 'N/A' : da.details }}
             </div>
           </q-card-section>
 
@@ -51,8 +51,8 @@
               </q-item-section>
 
               <q-item-section>
-                <q-item-label>Acreage</q-item-label>
-                <q-item-label caption>{{ da.acreage }}</q-item-label>
+                <q-item-label>Acreage (Size)</q-item-label>
+                <q-item-label caption>{{ da.acreage == null ? 'N/A' : da.acreage }}</q-item-label>
               </q-item-section>
             </q-item>
             <q-item>
@@ -62,7 +62,7 @@
 
               <q-item-section>
                 <q-item-label>Center GPS</q-item-label>
-                <q-item-label caption>{{ da.centergps }}</q-item-label>
+                <q-item-label caption>{{ da.centergps == null ? 'N/A' : da.centergps }}</q-item-label>
               </q-item-section>
             </q-item>
             <q-item>
@@ -72,17 +72,17 @@
 
               <q-item-section>
                 <q-item-label>Corner GPS</q-item-label>
-                <q-item-label caption>{{ da.cornergps }}</q-item-label>
+                <q-item-label caption>{{ da.cornergps == null ? 'N/A' : da.cornergps }}</q-item-label>
               </q-item-section>
             </q-item>
           </q-list>
-
-          <q-card-actions vertical class="justify-around col-2">
-            <q-btn flat round color="blue" icon="content_copy" @click="viewMore(da)">View More...</q-btn>
-            <q-btn v-if="!da.approved" flat round color="accent" icon="check_circle_outline" @click="onApproved(da.landid)">Approve</q-btn>
-            <q-btn v-else flat round color="red" icon="cancel" @click="onUnApproved(da.landid)">Un-approve</q-btn>
-          </q-card-actions>
         </q-card-section>
+        <q-separator />
+        <q-card-actions class="justify-around col-2">
+          <q-btn flat color="blue" icon="content_copy" @click="viewMore(da)">View More...</q-btn>
+          <q-btn v-if="!da.approved" flat color="accent" icon="check_circle_outline" @click="onApproved(da.landid)">Approve</q-btn>
+          <q-btn v-else flat color="red" icon="cancel" @click="onUnApproved(da.landid)">Un-approve</q-btn>
+        </q-card-actions>
       </q-card>
 
 
@@ -93,11 +93,11 @@
                 <div class="row q-pt-sm">
                   <q-form @submit="onFind" @reset="onReset" class="">
                     <div class="col-12 col-md-12 q-pl-md">
-                      <q-input label="Land ID" class="" outlined v-model="landid" hint="" />
+                      <q-input label="Parcel ID (APN)" class="" outlined v-model="parcelid" hint="" />
                     </div>
                     <q-separator dark />
                     <div class="col-12 q-pl-md full-width">
-                      <q-btn class="bg-primary text-white" type="submit">Find</q-btn>
+                      <q-btn :loading="loadingLandFindButton" class="bg-primary text-white" type="submit">Find</q-btn>
                     </div>
                   </q-form>
                 </div>
@@ -121,23 +121,23 @@
 
             <div class="row no-wrap items-center">
               <div class="col text-h6 ellipsis">
-                Title: {{ viewMoreData.title }}
+                Title: {{ viewMoreData.title == null ? 'N/A' : viewMoreData.title }}
               </div>
               <div class="col-auto text-grey text-caption q-pt-md row no-wrap items-center">
                 <q-icon name="place" />
-                Acreage: {{ viewMoreData.acreage }}ft
+                Acreage (Size): {{ viewMoreData.acreage == null ? 'N/A' : viewMoreData.acreage }}
               </div>
             </div>
 
-            <q-rating v-model="stars" :max="5" size="32px" />
+            <!-- <q-rating v-model="stars" :max="5" size="32px" /> -->
           </q-card-section>
 
           <q-card-section class="q-pt-none">
             <div class="text-subtitle1">
-              Parcel ID:
+              Parcel ID [APN]:
             </div>
             <div class="text-caption text-grey">
-              {{ viewMoreData.parcelid }}
+              {{ viewMoreData.parcelid == null ? 'N/A' : viewMoreData.parcelid }}
             </div>
           </q-card-section>
 
@@ -146,7 +146,7 @@
               Price:
             </div>
             <div class="text-caption text-grey">
-              ${{ viewMoreData.price }}
+              ${{ viewMoreData.price == null ? 'N/A' : viewMoreData.price }}
             </div>
           </q-card-section>
 
@@ -155,7 +155,7 @@
               Location:
             </div>
             <div class="text-caption text-grey">
-              {{ viewMoreData.address }}, {{ viewMoreData.city }}, {{ viewMoreData.province }}, {{ viewMoreData.country }}
+              {{ viewMoreData.address == null ? 'N/A' : viewMoreData.address }}, {{ viewMoreData.city == null ? 'N/A' : viewMoreData.city }}, {{ viewMoreData.province == null ? 'N/A' : viewMoreData.province }}, {{ viewMoreData.country == null ? 'N/A' : viewMoreData.country }}
             </div>
           </q-card-section>
 
@@ -164,7 +164,7 @@
               Details:
             </div>
             <div class="text-caption text-grey">
-              {{ viewMoreData.details }}
+              {{ viewMoreData.details == null ? 'N/A' : viewMoreData.details }}
             </div>
           </q-card-section>
 
@@ -183,103 +183,107 @@
                 <tbody>
                   <tr>
                     <td>Land ID</td>
-                    <td>{{ viewMoreData.landid }}</td>
+                    <td>{{ viewMoreData.landid == null ? 'N/A' : viewMoreData.landid }}</td>
                   </tr>
                   <tr>
                     <td>Land Tag</td>
-                    <td>{{ viewMoreData.landtag }}</td>
+                    <td>{{ viewMoreData.landtag == null ? 'N/A' : viewMoreData.landtag }}</td>
                   </tr>
                   <tr>
                     <td>Land Type</td>
-                    <td>{{ viewMoreData.landtype }}</td>
+                    <td>{{ viewMoreData.landtype == null ? 'N/A' : viewMoreData.landtype }}</td>
                   </tr>
                   <tr>
                     <td>Posted By ID</td>
-                    <td>{{ viewMoreData.postedbyid }}</td>
+                    <td>{{ viewMoreData.postedbyid == null ? 'N/A' : viewMoreData.postedbyid }}</td>
                   </tr>
                   <tr>
                     <td>Posted By Name</td>
-                    <td>{{ viewMoreData.postedbyname }}</td>
+                    <td>{{ viewMoreData.postedbyname == null ? 'N/A' : viewMoreData.postedbyname }}</td>
                   </tr>
                   <tr>
                     <td>Center GPS</td>
-                    <td>{{ viewMoreData.centergps }}</td>
+                    <td>{{ viewMoreData.centergps == null ? 'N/A' : viewMoreData.centergps }}</td>
                   </tr>
                   <tr>
                     <td>Corner GPS</td>
-                    <td>{{ viewMoreData.cornergps }}</td>
+                    <td>{{ viewMoreData.cornergps == null ? 'N/A' : viewMoreData.cornergps }}</td>
                   </tr>
                   <tr>
                     <td>Water?</td>
-                    <td>{{ viewMoreData.water }}</td>
+                    <td>{{ viewMoreData.water == false ? 'N/A' : 'Yes' }}</td>
                   </tr>
                   <tr>
                     <td>Electricity?</td>
-                    <td>{{ viewMoreData.electricity }}</td>
+                    <td>{{ viewMoreData.electricity == false ? 'N/A' : 'Yes' }}</td>
                   </tr>
                   <tr>
                     <td>Road access?</td>
-                    <td>{{ viewMoreData.road }}</td>
+                    <td>{{ viewMoreData.road == false ? 'N/A' : 'Yes' }}</td>
                   </tr>
                   <tr>
                     <td>Is there a Structure?</td>
-                    <td>{{ viewMoreData.structure }}</td>
+                    <td>{{ viewMoreData.structure == false ? 'N/A' : 'Yes' }}</td>
                   </tr>
                   <tr>
                     <td>Flooded</td>
-                    <td>{{ viewMoreData.flooded }}</td>
+                    <td>{{ viewMoreData.flooded == false ? 'N/A' : 'Yes' }}</td>
                   </tr>
                   <tr>
                     <td>Title Free?</td>
-                    <td>{{ viewMoreData.titlefree }}</td>
+                    <td>{{ viewMoreData.titlefree == false ? 'N/A' : 'Yes' }}</td>
                   </tr>
                   <tr>
                     <td>HOA?</td>
-                    <td>{{ viewMoreData.hoa }}</td>
+                    <td>{{ viewMoreData.hoa == false ? 'N/A' : 'Yes' }}</td>
                   </tr>
                   <tr>
                     <td>Liens?</td>
-                    <td>{{ viewMoreData.liens }}</td>
+                    <td>{{ viewMoreData.liens == false ? 'N/A' : 'Yes' }}</td>
                   </tr>
                   <tr>
                     <td>Encumbrances?</td>
-                    <td>{{ viewMoreData.encumbrances }}</td>
+                    <td>{{ viewMoreData.encumbrances == false ? 'N/A' : 'Yes' }}</td>
                   </tr>
                   <tr>
                     <td>Tax?</td>
-                    <td>{{ viewMoreData.tax }}</td>
+                    <td>{{ viewMoreData.tax == false ? 'N/A' : 'Yes' }}</td>
+                  </tr>
+                  <tr>
+                    <td>Price Negotiation?</td>
+                    <td>{{ viewMoreData.pricenegotiation == false ? 'N/A' : 'Yes' }}</td>
                   </tr>
                   <tr>
                     <td>Listed By a Realtor?</td>
-                    <td>{{ viewMoreData.listedbyrealtor }}</td>
+                    <td>{{ viewMoreData.listedbyrealtor == false ? 'N/A' : 'Yes' }}</td>
                   </tr>
                   <tr>
                     <td>Terms</td>
-                    <td>{{ viewMoreData.terms }}</td>
+                    <td>{{ viewMoreData.terms == null ? 'N/A' : viewMoreData.terms }}</td>
                   </tr>
                   <tr>
                     <td>Status</td>
-                    <td>{{ viewMoreData.status }}</td>
+                    <td>{{ viewMoreData.status == null ? 'N/A' : viewMoreData.status }}</td>
                   </tr>
                   <tr>
                     <td>Approved?</td>
-                    <td>{{ viewMoreData.approved }}</td>
+                    <td>{{ viewMoreData.approved == false ? 'NO' : 'YES' }}</td>
                   </tr>
                   <tr>
                     <td>Approved by</td>
-                    <td>{{ viewMoreData.approvedby }}</td>
+                    <td>{{ viewMoreData.approvedby == null ? 'N/A' : viewMoreData.approvedby }}</td>
                   </tr>
                   <tr>
                     <td>Realtor Name</td>
-                    <td>{{ viewMoreData.realtorname }}</td>
+                    <td>{{ viewMoreData.realtorname == null ? 'N/A' : viewMoreData.realtorname }}</td>
                   </tr>
                   <tr>
                     <td>Realtor ID</td>
-                    <td>{{ viewMoreData.realtorid }}</td>
+                    <td>{{ viewMoreData.realtorid == null ? 'N/A' : viewMoreData.realtorid }}</td>
                   </tr>
                   <tr>
                     <td>Realtor Phone</td>
-                    <td>{{ viewMoreData.realtorphone }}</td>
+                    <td>{{ viewMoreData.realtorphone == null ? 'N/A' : viewMoreData.realtorphone }}</td>
                   </tr>
                 </tbody>
               </table>
@@ -338,6 +342,7 @@
           <q-card-actions align="right">
             <!-- <q-btn v-close-popup flat color="primary" label="Reserve" />
             <q-btn v-close-popup flat color="primary" round icon="event" /> -->
+            <q-btn v-close-popup flat color="primary" label="Copy Parcel ID (APN)" @click="copyTo(viewMoreData.parcelid)" />
             <q-btn v-close-popup flat color="primary" label="Copy Land ID" @click="copyTo(viewMoreData.landid)" />
           </q-card-actions>
         </q-card>
@@ -357,10 +362,11 @@ import { useRouter } from 'vue-router'
 const name = 'LandsPage'
 
 const findLand = ref(false)
-const landid = ref('')
+const parcelid = ref('')
 const card = ref(false)
 const loadingCreateLand = ref(false)
 const loadingFindLand = ref(false)
+const loadingLandFindButton = ref(false)
 const slide = ref(1)
 const data = ref([])
 const viewMoreData = ref({})
@@ -496,14 +502,16 @@ const onUnApproved = (landid) => {
 
 const onFind = () => {
   loadingFindLand.value = true
-  // api.get(`${base}/admin/serve/lands/${landid.value}`,
-  api.get(`/admin/serve/lands/${landid.value}`,
+  loadingLandFindButton.value = true
+  // api.get(`${base}/admin/serve/lands/${parcelid.value}`,
+  api.get(`/admin/serve/lands/find/${parcelid.value}`,
     { headers: { "Authorization": `Bearer ${token}` }, })
     .then((response) => {
       findLand.value = false;
       card.value = true;
       viewMoreData.value = response.data.data
       console.log(viewMoreData.value)
+      loadingLandFindButton.value = false;
 
       $q.notify({
         color: 'green-4',
@@ -511,6 +519,7 @@ const onFind = () => {
         icon: 'thumb_up',
         message: 'Land Found'
       })
+      loadingLandFindButton.value = false;
     })
     .catch(() => {
       $q.notify({
@@ -523,6 +532,10 @@ const onFind = () => {
 
     loadingFindLand.value = false
 }
+
+const onReset = () => {
+    parcelid.value = null
+  }
 
 watch(() => {
   var decoded = useStore.checkToken(token);
@@ -550,7 +563,7 @@ onMounted(() => {
   width: 100%
   // max-width: 350px
 .my-thumbnail
-  height: 200px
+  height: 300px
 .table-resp
   border-collapse: collapse
   margin-left: 1em

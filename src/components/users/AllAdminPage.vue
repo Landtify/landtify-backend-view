@@ -22,7 +22,7 @@
           'username',
           'admintype',
           'phone',
-          'picture',
+          // 'picture',
           'gender',
           'dob',
           'address',
@@ -49,7 +49,7 @@
               <div class="row q-pt-sm">
                 <q-form @submit="onFind" @reset="onReset" class="">
                   <div class="col-12 col-md-12 q-pl-md">
-                    <q-input label="Admin ID" class="" outlined v-model="admin_id" hint="" />
+                    <q-input label="Admin ID" class="" outlined v-model="adminid" hint="" />
                   </div>
                   <q-separator dark />
                   <div class="col-12 q-pl-md">

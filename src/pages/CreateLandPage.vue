@@ -9,7 +9,7 @@
             <q-input required class="" outlined v-model="title" hint="Title" />
           </div>
           <div class="col-12 col-md-6 q-pl-md">
-            <q-input required class="" outlined v-model="parcelid" hint="Parcel ID" />
+            <q-input required class="" outlined v-model="parcelid" hint="Parcel ID [APN]" />
           </div>
         </div>
         <div class="row q-pt-sm">
@@ -40,15 +40,15 @@
         </div>
         <div class="row q-pt-sm">
           <div class="col-12 col-md-6 q-pl-md">
-            <q-input class="" v-model="province" outlined type="text" hint="Province" />
+            <q-input class="" v-model="province" outlined type="text" hint="State" />
           </div>
           <div class="col-12 col-md-6 q-pl-md">
-            <q-input class="" v-model="country" type="text" outlined hint="Country" />
+            <q-select :options="optionsCountry" class="" v-model="country" type="text" outlined hint="Country" />
           </div>
         </div>
         <div class="row q-pt-sm">
           <div class="col-12 col-md-6 q-pl-md">
-            <q-input class="" outlined v-model="acreage" hint="Acreage(Square Feet)" />
+            <q-input class="" outlined v-model="acreage" hint="Acreage (Size)" />
           </div>
           <div class="col-12 col-md-6 q-pl-md">
             <q-select :options="optionsStatus" required class="" outlined v-model="status"
@@ -269,7 +269,14 @@
             <q-input required outlined v-model="price" hint="Price" type="text" />
           </div>
         </div>
-
+        <div class="col-12 col-md-3 q-pl-md">
+          <q-toggle
+            v-model="pricenegotiation"
+            color="green"
+            label="Open for negotiation?"
+            left-label
+          />
+        </div>
 
         <div class="row q-pt-lg">
           <div class="text-center full-width q-pl-md">
@@ -309,6 +316,10 @@ const optionsStatus = [
   'Sold'
 ]
 
+const optionsCountry = [
+  'USA(United States Of America)'
+]
+
 
 const $q = useQuasar()
 const loadingCreateLands = ref(false)
@@ -337,6 +348,7 @@ const mobilehome = ref(false)
 const encumbrances = ref(false)
 const listedbyrealtor = ref(false)
 const tax = ref(false)
+const pricenegotiation = ref(false)
 const centergps = ref('')
 const cornergps = ref('')
 const thumbnail = ref(null)
@@ -398,6 +410,7 @@ const onSubmit = async () => {
   fd.append('mobilehome', mobilehome.value);
   fd.append('encumbrances', encumbrances.value);
   fd.append('tax', tax.value);
+  fd.append('pricenegotiation', pricenegotiation.value);
   fd.append('listedbyrealtor', listedbyrealtor.value);
   fd.append('realtorname', realtorname.value);
   fd.append('realtorphone', realtorphone.value);
@@ -442,6 +455,7 @@ const onSubmit = async () => {
   //   mobilehome: mobilehome.value,
   //   encumbrances: encumbrances.value,
   //   tax: tax.value,
+  //   pricenegotiation: pricenegotiation.value,
   //   listedbyrealtor: listedbyrealtor.value,
   //   realtorname: realtorname.value,
   //   realtorphone: realtorphone.value,
@@ -516,6 +530,7 @@ const onReset = () => {
     mobilehome.value = null
     encumbrances.value = null
     tax.value = null
+    pricenegotiation.value = null
     listedbyrealtor.value = null
     realtorname.value = null
     realtorphone.value = null

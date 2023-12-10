@@ -23,7 +23,7 @@
           'usertype',
           'phone',
           'businessname',
-          'picture',
+          // 'picture',
           'walletid',
           'walletamount',
           'gender',

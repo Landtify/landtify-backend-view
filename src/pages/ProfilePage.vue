@@ -49,7 +49,7 @@
       </div>
       <div class="row q-pt-sm">
         <div class="col-12 col-md-6 q-pl-md">
-          <q-input readonly hint="Province" class="" outlined :label="data.province" />
+          <q-input readonly hint="State" class="" outlined :label="data.province" />
         </div>
         <div class="col-12 col-md-6 q-pl-md">
           <q-input readonly hint="Country" outlined :label="data.country" />
