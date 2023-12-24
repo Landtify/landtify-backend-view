@@ -22,10 +22,10 @@
           'username',
           'usertype',
           'phone',
+          'picture',
           'businessname',
-          // 'picture',
-          'walletid',
-          'walletamount',
+          // 'walletid',
+          // 'walletamount',
           'gender',
           'dob',
           'address',
@@ -35,6 +35,64 @@
         ]"
           :filter="filter"
           >
+
+        <template v-slot:body="props">
+          <q-tr :props="props" @click="onRowClick(props.row)">
+            <q-td key="userid" :props="props">
+              <q-badge color="green">
+                {{ props.row.userid }}
+              </q-badge>
+            </q-td>
+            <q-td key="firstname" :props="props">
+              {{ props.row.firstname }}
+            </q-td>
+            <q-td key="lastname" :props="props">
+              {{ props.row.lastname }}
+            </q-td>
+            <q-td key="email" :props="props">
+              {{ props.row.email }}
+            </q-td>
+            <q-td key="username" :props="props">
+              {{ props.row.username }}
+            </q-td>
+            <q-td key="usertype" :props="props">
+              <q-badge color="green">
+                {{ props.row.usertype }}
+              </q-badge>
+            </q-td>
+            <q-td key="phone" :props="props">
+              {{ props.row.phone }}
+            </q-td>
+            <q-td key="picture" :props="props">
+              <q-avatar
+                size="40px"
+              >
+                <img :src="props.row.picture">
+              </q-avatar>
+            </q-td>
+            <q-td key="businessname" :props="props">
+              {{ props.row.businessname }}
+            </q-td>
+            <q-td key="gender" :props="props">
+              {{ props.row.gender }}
+            </q-td>
+            <q-td key="dob" :props="props">
+              {{ props.row.dob }}
+            </q-td>
+            <q-td key="address" :props="props">
+              {{ props.row.address }}
+            </q-td>
+            <q-td key="city" :props="props">
+              {{ props.row.city }}
+            </q-td>
+            <q-td key="province" :props="props">
+              {{ props.row.province }}
+            </q-td>
+            <q-td key="country" :props="props">
+              {{ props.row.country }}
+            </q-td>
+          </q-tr>
+        </template>
           <!-- :loading="true" -->
         <template v-slot:top-right>
           <q-input borderless dense debounce="300" v-model="filter" placeholder="Search">
@@ -47,7 +105,7 @@
 
       <q-dialog v-model="findUser">
         <div class="q-pa-md row items-start q-gutter-md">
-          <q-card class="my-card-2 text-primary">
+          <q-card class="my-card-3 text-primary">
             <q-card-section>
               <div class="row q-pt-sm">
                 <q-form @submit="onFind" @reset="onReset" class="">
@@ -66,8 +124,8 @@
       </q-dialog>
 
       <q-dialog v-model="findUser2">
-        <div class="q-pa-md row items-start q-gutter-md">
-          <q-card class="my-card-2  text-primary">
+        <div class="my-card-2">
+          <q-card>
             <q-img :src="viewMoreData.picture" class="my-thumbnail" />
 
               <q-card-section>
@@ -217,6 +275,7 @@ const data = ref([])
 const viewMoreData = ref({})
 const dataDelete = ref([])
 const userid = ref('')
+const filter = ref('')
 const useStore = useAdminStore()
 const $router = useRouter()
 const selectedCustomer = reactive([])
@@ -265,6 +324,11 @@ function copyTo(ID){
   })
 }
 
+
+const onRowClick = (row) => {
+  findUser2.value = true;
+  viewMoreData.value = row;
+}
 
 function popup1(selectedCustomer) {
   fixed1.value = true
@@ -370,10 +434,14 @@ const onDelete = () => {
 </script>
 
 <style lang="sass" scoped>
-.my-card
-  width: 100%
-  max-width: 250px
+// .my-card
+//   width: 100%
+//   max-width: 250px
 .my-card-2
+  // width: 100%
+  // max-width: 550px
+  width: 550px
+.my-card-3
   width: 100%
   max-width: 550px
 

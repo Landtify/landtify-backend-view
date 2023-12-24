@@ -9,7 +9,7 @@
       </div>
       <q-table
         class="my-sticky-header-table"
-        title="All User"
+        title="All Admin's"
         :rows="data"
         row-key="name"
         flat
@@ -22,7 +22,7 @@
           'username',
           'admintype',
           'phone',
-          // 'picture',
+          'picture',
           'gender',
           'dob',
           'address',
@@ -30,8 +30,62 @@
           'province',
           'country',
         ]"
-          :filter="filter"
-          >
+        :filter="filter"
+        >
+        <template v-slot:body="props">
+          <q-tr :props="props" @click="onRowClick(props.row)">
+            <q-td key="adminid" :props="props">
+              <q-badge color="green">
+                {{ props.row.adminid }}
+              </q-badge>
+            </q-td>
+            <q-td key="firstname" :props="props">
+              {{ props.row.firstname }}
+            </q-td>
+            <q-td key="lastname" :props="props">
+              {{ props.row.lastname }}
+            </q-td>
+            <q-td key="email" :props="props">
+              {{ props.row.email }}
+            </q-td>
+            <q-td key="username" :props="props">
+              {{ props.row.username }}
+            </q-td>
+            <q-td key="admintype" :props="props">
+              <q-badge color="green">
+                {{ props.row.admintype }}
+              </q-badge>
+            </q-td>
+            <q-td key="phone" :props="props">
+              {{ props.row.phone }}
+            </q-td>
+            <q-td key="picture" :props="props">
+              <q-avatar
+                size="40px"
+              >
+                <img :src="props.row.picture">
+              </q-avatar>
+            </q-td>
+            <q-td key="gender" :props="props">
+              {{ props.row.gender }}
+            </q-td>
+            <q-td key="dob" :props="props">
+              {{ props.row.dob }}
+            </q-td>
+            <q-td key="address" :props="props">
+              {{ props.row.address }}
+            </q-td>
+            <q-td key="city" :props="props">
+              {{ props.row.city }}
+            </q-td>
+            <q-td key="province" :props="props">
+              {{ props.row.province }}
+            </q-td>
+            <q-td key="country" :props="props">
+              {{ props.row.country }}
+            </q-td>
+          </q-tr>
+        </template>
           <!-- :loading="true" -->
         <template v-slot:top-right>
           <q-input borderless dense debounce="300" v-model="filter" placeholder="Search">
@@ -44,7 +98,7 @@
 
       <q-dialog v-model="findAdmin">
         <div class="q-pa-md row items-start q-gutter-md">
-          <q-card class="my-card-2 text-primary">
+          <q-card class="my-card-3 text-primary">
             <q-card-section>
               <div class="row q-pt-sm">
                 <q-form @submit="onFind" @reset="onReset" class="">
@@ -63,8 +117,8 @@
       </q-dialog>
 
       <q-dialog v-model="findAdmin2">
-        <div class="q-pa-md row items-start q-gutter-md">
-          <q-card class="my-card-2  text-primary">
+        <div class="my-card-2">
+          <q-card>
             <q-img :src="viewMoreData.picture" class="my-thumbnail" />
 
                 <q-card-section>
@@ -115,14 +169,14 @@
                   </div>
                 </q-card-section>
 
-                <q-card-section class="q-pt-none text-center">
+                <!-- <q-card-section class="q-pt-none text-center">
                   <div class="text-subtitle1">
                     Business Name:
                   </div>
                   <div class="text-caption text-grey">
                     {{ viewMoreData.businessname }}
                   </div>
-                </q-card-section>
+                </q-card-section> -->
 
                 <q-card-section class="q-pt-none text-center">
                   <div class="text-subtitle1">
@@ -149,7 +203,7 @@
                     {{ viewMoreData.dob }}
                   </div>
                 </q-card-section>
-                <q-card-section class="q-pt-none text-center">
+                <!-- <q-card-section class="q-pt-none text-center">
                   <div class="text-subtitle1">
                     Following:
                   </div>
@@ -180,7 +234,7 @@
                     <div class="text-caption text-grey">
                       {{ viewMoreData.walleamount }}
                     </div>
-                  </q-card-section>
+                  </q-card-section> -->
 
               <q-separator />
 
@@ -215,6 +269,7 @@ const data = ref([])
 const viewMoreData = ref({})
 const dataDelete = ref([])
 const adminid = ref('')
+const filter = ref('')
 const useStore = useAdminStore()
 const $router = useRouter()
 const selectedCustomer = reactive([])
@@ -297,6 +352,11 @@ const loadData = () => {
         icon: 'report_problem'
       })
     })
+}
+
+const onRowClick = (row) => {
+  findAdmin2.value = true;
+  viewMoreData.value = row;
 }
 
 const onFind = () => {
@@ -384,13 +444,17 @@ onMounted(() => {
 </script>
 
 <style lang="sass" scoped>
-.my-card
-  width: 100%
-  max-width: 250px
+// .my-card
+//   width: 100%
+//   max-width: 250px
 .my-thumbnail
   height: 200px
 
 .my-card-2
+  // width: 100%
+  width: 650px
+  // max-width: 850px
+.my-card-3
   width: 100%
   max-width: 550px
 .siz
@@ -426,4 +490,6 @@ select
 .is-s
   background-color: #001951
   color: white
+
 </style>
+
