@@ -156,7 +156,7 @@
 
             <q-card-actions align="right">
               <q-btn v-close-popup flat color="primary" label="Copy User ID" @click="copyTo(viewMoreData.userid)"  />
-              <q-btn v-close-popup flat color="primary" round icon="event" />
+              <!-- <q-btn v-close-popup flat color="primary" round icon="event" /> -->
             </q-card-actions>
           </q-card>
         </q-dialog>
