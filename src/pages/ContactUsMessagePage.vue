@@ -16,9 +16,21 @@
                 Yet to reply
               </div>
             </div>
-            <div class="text-h5 q-mt-sm q-mb-xs">Message</div>
-            <div class="text-caption text-grey">
-              {{ da.message }}
+            <div class="row">
+              <div class="col-6">
+                <div class="text-h5 q-mt-sm q-mb-xs">Message</div>
+                <div class="text-caption text-grey">
+                  {{ da.message }}
+                </div>
+              </div>
+              <div class="col-6">
+                <div v-show="da.repliedmessage != '' || null">
+                  <div class="text-h5 q-mt-sm q-mb-xs">Reply</div>
+                  <div class="text-caption text-grey">
+                    {{ da.repliedmessage }}
+                  </div>
+                </div>
+              </div>
             </div>
           </q-card-section>
 
@@ -56,11 +68,45 @@
           </q-list>
 
           <q-card-actions vertical class="justify-around col-2">
-            <q-btn flat round color="red" icon="content_copy" @click="copyTo(da.email)"> Copy Email</q-btn>
-            <q-btn v-if="!da.replied" flat round color="accent" icon="reply" @click="onReplied(da.contactid)">Replied?</q-btn>
+            <q-btn flat color="red" icon="content_copy" @click="copyTo(da.email)"> Copy Email</q-btn>
+            <q-btn v-if="!da.replied" flat color="accent" icon="reply" @click="replyUser()">Reply User</q-btn>
           </q-card-actions>
+
+
+          <q-dialog v-model="replyUser_">
+            <q-card class="">
+              <q-card-section horizontal>
+                <q-card-section class="q-pt-xs">
+                  <div class="row q-pt-sm">
+                    <q-form @submit="onReplied(da.contactid)" @reset="onReset" class="">
+                      <div class="q-pa-md" >
+                        <q-input
+                          v-model="repliedmessage"
+                          filled
+                          type="textarea"
+                          hint="Enter your message"
+                          />
+                          <!-- class="fit" -->
+                      </div>
+                      <q-separator dark />
+                      <div class="col-12 q-pl-md">
+                        <q-btn align="right" :loading="loadingReply" class="bg-primary text-white" type="submit">Send</q-btn>
+                      </div>
+                    </q-form>
+                  </div>
+                </q-card-section>
+
+                <!-- <q-card-actions vertical class="justify-around col-2">
+                  <q-btn v-if="!da.replied" flat round color="accent" icon="reply" @click="onReplied(da.contactid)">Replied?</q-btn>
+                </q-card-actions> -->
+              </q-card-section>
+            </q-card>
+          </q-dialog>
+
+
         </q-card-section>
       </q-card>
+
 
     </div>
   </q-page>
@@ -77,6 +123,9 @@ const name = 'ContactUsMessagePage'
 
 const data = ref([])
 const replied = ref([])
+const repliedmessage = ref("")
+const loadingReply = ref(false)
+const replyUser_ = ref(false)
 const useStore = useAdminStore()
 const $q = useQuasar()
 const $router = useRouter()
@@ -129,15 +178,20 @@ const loadData = () => {
     })
 }
 
+const replyUser = () => {
+  replyUser_.value = true;
+}
 
 const onReplied = (contactid) => {
   // const token = useStore.getToken
+  loadingReply.value = true
   console.log(token)
   const formData = {
     repliedbyid: adminid,
+    repliedmessage: repliedmessage.value
   }
 
-  api.patch(`${base}/admin/serve/contactus/approve/${contactid}`, formData ,
+  api.patch(`${base}/admin/serve/contactus/reply/${contactid}`, formData ,
     { headers: { "Authorization": `Bearer ${token}` }, })
     .then((response) => {
       replied.value = response.data.data
@@ -159,6 +213,9 @@ const onReplied = (contactid) => {
       })
       window.location.reload();
     })
+
+  loadingReply.value = false
+  replyUser_.value = false
 }
 
 watch(() => {
@@ -172,6 +229,10 @@ watch(() => {
     $router.go();
   }
 })
+
+const onReset = () => {
+  repliedmessage.value = null
+}
 
 onMounted(() => {
   loadData()
