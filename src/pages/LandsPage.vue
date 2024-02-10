@@ -7,82 +7,199 @@
         <q-btn :loading="loadingCreateLand" color="blue" class="q-mr-md" to="/create-lands">Post Land</q-btn>
         <q-btn :loading="loadingFindLand" color="blue" @click="goToFindLand()">Find a Land</q-btn>
       </div>
-      <q-card class="my-land" v-for="(da, index) in data" :key="index">
-        <q-card-section horizontal>
-          <q-img :src="da.thumbnail" class="col-5 my-thumbnail" fit="cover">
-            <div class="absolute-bottom text-subtitle2 text-center">
-              {{ da.title == null ? 'N/A' : da.title }}, [{{ da.landtag == null ? 'N/A' : da.landtag }}]
-            </div>
-          </q-img>
-        <!-- </q-card-section>
-        <q-card-section horizontal> -->
-          <q-card-section class="q-pt-xs col-5">
-            <div class="text-overline">
-              <div v-if="da.approved">
-                <q-icon color="green" name="verified" />
-                Approved
-              </div>
-              <div v-else color="yellow">
-                <q-icon color="red" name="cancel_schedule_send" />
-                Awaiting Approval
-              </div>
-            </div>
-            <q-separator />
-            <div class="text-h5 q-mt-sm q-mb-xs">Land Type</div>
-            <div class="text-caption text-grey">
-              {{ da.landtype == null ? 'N/A' : da.landtype }}
-            </div>
-            <q-separator />
-            <div class="text-h5 q-mt-sm q-mb-xs">City, State & Country</div>
-            <div class="text-caption text-grey">
-              {{ da.city == null ? 'N/A' : da.city }}, {{ da.province == null ? 'N/A' : da.province }}, {{ da.country == null ? 'N/A' : da.country }}
-            </div>
-            <q-separator />
-            <div class="text-h5 q-mt-sm q-mb-xs">Details</div>
-            <div class="text-caption text-grey ellipsis-3-lines">
-              {{ da.details == null ? 'N/A' : da.details }}
-            </div>
-          </q-card-section>
-
-          <q-list class="col-2">
-            <q-item>
-              <q-item-section avatar>
-                <q-icon color="primary" name="pin_drop" />
-              </q-item-section>
-
-              <q-item-section>
-                <q-item-label>Acreage (Size)</q-item-label>
-                <q-item-label caption>{{ da.acreage == null ? 'N/A' : da.acreage }}</q-item-label>
-              </q-item-section>
-            </q-item>
-            <q-item>
-              <q-item-section avatar>
-                <q-icon color="primary" name="explore" />
-              </q-item-section>
-
-              <q-item-section>
-                <q-item-label>Center GPS</q-item-label>
-                <q-item-label caption>{{ da.centergps == null ? 'N/A' : da.centergps }}</q-item-label>
-              </q-item-section>
-            </q-item>
-            <q-item>
-              <q-item-section avatar>
-                <q-icon color="primary" name="explore" />
-              </q-item-section>
-
-              <q-item-section>
-                <q-item-label>Corner GPS</q-item-label>
-                <q-item-label caption>{{ da.cornergps == null ? 'N/A' : da.cornergps }}</q-item-label>
-              </q-item-section>
-            </q-item>
-          </q-list>
+      <q-card v-if="data.length == 0" class="my-card text-center">
+        <q-card-section>
+          There is no PROPERTY available yet.
         </q-card-section>
-        <q-separator />
-        <q-card-actions class="justify-around col-2">
-          <q-btn flat color="blue" icon="content_copy" @click="viewMore(da)">View More...</q-btn>
-          <q-btn v-if="!da.approved" flat color="accent" icon="check_circle_outline" @click="onApproved(da.landid)">Approve</q-btn>
-          <q-btn v-else flat color="red" icon="cancel" @click="onUnApproved(da.landid)">Un-approve</q-btn>
-        </q-card-actions>
+      </q-card>
+      <q-card v-else>
+        <q-tabs
+          v-model="tab"
+          dense
+          class="text-black"
+          active-color="primary"
+          indicator-color="primary"
+          align="left"
+        >
+          <q-tab name="approved" label="Approved" />
+          <q-tab name="not-approved" label="Not-Approved" />
+        </q-tabs>
+
+        <q-tab-panels v-model="tab" animated class="">
+          <q-tab-panel name="approved" class="q-gutter-y-md">
+            <q-card v-if="approvedData.length == 0" class="my-card text-center">
+              <q-card-section>
+                There is no <strong>APPROVED PROPERTY</strong> available yet.
+              </q-card-section>
+            </q-card>
+            <div v-else>
+              <q-card class="my-land" v-for="(da, index) in approvedData" :key="index">
+                <q-card-section horizontal>
+                  <q-img :src="da.thumbnail" class="col-5 my-thumbnail" fit="cover">
+                    <div class="absolute-bottom text-subtitle2 text-center">
+                      {{ da.title == null ? 'N/A' : da.title }}, [{{ da.landtag == null ? 'N/A' : da.landtag }}]
+                    </div>
+                  </q-img>
+                <!-- </q-card-section>
+                <q-card-section horizontal> -->
+                  <q-card-section class="q-pt-xs col-5">
+                    <div class="text-overline">
+                      <div v-if="da.approved">
+                        <q-icon color="green" name="verified" />
+                        Approved
+                      </div>
+                      <div v-else color="yellow">
+                        <q-icon color="red" name="cancel_schedule_send" />
+                        Awaiting Approval
+                      </div>
+                    </div>
+                    <q-separator />
+                    <div class="text-h5 q-mt-sm q-mb-xs">Land Type</div>
+                    <div class="text-caption text-grey">
+                      {{ da.landtype == null ? 'N/A' : da.landtype }}
+                    </div>
+                    <q-separator />
+                    <div class="text-h5 q-mt-sm q-mb-xs">City, State & Country</div>
+                    <div class="text-caption text-grey">
+                      {{ da.city == null ? 'N/A' : da.city }}, {{ da.province == null ? 'N/A' : da.province }}, {{ da.country == null ? 'N/A' : da.country }}
+                    </div>
+                    <q-separator />
+                    <div class="text-h5 q-mt-sm q-mb-xs">Details</div>
+                    <div class="text-caption text-grey ellipsis-3-lines">
+                      {{ da.details == null ? 'N/A' : da.details }}
+                    </div>
+                  </q-card-section>
+
+                  <q-list class="col-2">
+                    <q-item>
+                      <q-item-section avatar>
+                        <q-icon color="primary" name="pin_drop" />
+                      </q-item-section>
+
+                      <q-item-section>
+                        <q-item-label>Acreage (Size)</q-item-label>
+                        <q-item-label caption>{{ da.acreage == null ? 'N/A' : da.acreage }}</q-item-label>
+                      </q-item-section>
+                    </q-item>
+                    <q-item>
+                      <q-item-section avatar>
+                        <q-icon color="primary" name="explore" />
+                      </q-item-section>
+
+                      <q-item-section>
+                        <q-item-label>Center GPS</q-item-label>
+                        <q-item-label caption>{{ da.centergps == null ? 'N/A' : da.centergps }}</q-item-label>
+                      </q-item-section>
+                    </q-item>
+                    <q-item>
+                      <q-item-section avatar>
+                        <q-icon color="primary" name="explore" />
+                      </q-item-section>
+
+                      <q-item-section>
+                        <q-item-label>Corner GPS</q-item-label>
+                        <q-item-label caption>{{ da.cornergps == null ? 'N/A' : da.cornergps }}</q-item-label>
+                      </q-item-section>
+                    </q-item>
+                  </q-list>
+                </q-card-section>
+                <q-separator />
+                <q-card-actions class="justify-around col-2">
+                  <q-btn flat color="blue" icon="content_copy" @click="viewMore(da)">View More...</q-btn>
+                  <q-btn v-if="!da.approved" flat color="accent" icon="check_circle_outline" @click="onApproved(da.landid)">Approve</q-btn>
+                  <q-btn v-else flat color="red" icon="cancel" @click="onUnApproved(da.landid)">Un-approve</q-btn>
+                </q-card-actions>
+              </q-card>
+            </div>
+          </q-tab-panel>
+
+          <q-tab-panel name="not-approved" class="q-gutter-y-md">
+            <q-card v-if="notApprovedData.length == 0" class="my-card text-center">
+              <q-card-section>
+                There is no <strong>UN-APPROVED PROPERTY</strong> available yet.
+              </q-card-section>
+            </q-card>
+            <div v-else>
+              <q-card class="my-land" v-for="(nda, index) in notApprovedData" :key="index">
+                <q-card-section horizontal>
+                  <q-img :src="nda.thumbnail" class="col-5 my-thumbnail" fit="cover">
+                    <div class="absolute-bottom text-subtitle2 text-center">
+                      {{ nda.title == null ? 'N/A' : nda.title }}, [{{ nda.landtag == null ? 'N/A' : nda.landtag }}]
+                    </div>
+                  </q-img>
+                <!-- </q-card-section>
+                <q-card-section horizontal> -->
+                  <q-card-section class="q-pt-xs col-5">
+                    <div class="text-overline">
+                      <div v-if="nda.approved">
+                        <q-icon color="green" name="verified" />
+                        Approved
+                      </div>
+                      <div v-else color="yellow">
+                        <q-icon color="red" name="cancel_schedule_send" />
+                        Awaiting Approval
+                      </div>
+                    </div>
+                    <q-separator />
+                    <div class="text-h5 q-mt-sm q-mb-xs">Land Type</div>
+                    <div class="text-caption text-grey">
+                      {{ nda.landtype == null ? 'N/A' : nda.landtype }}
+                    </div>
+                    <q-separator />
+                    <div class="text-h5 q-mt-sm q-mb-xs">City, State & Country</div>
+                    <div class="text-caption text-grey">
+                      {{ nda.city == null ? 'N/A' : nda.city }}, {{ nda.province == null ? 'N/A' : nda.province }}, {{ nda.country == null ? 'N/A' : nda.country }}
+                    </div>
+                    <q-separator />
+                    <div class="text-h5 q-mt-sm q-mb-xs">Details</div>
+                    <div class="text-caption text-grey ellipsis-3-lines">
+                      {{ nda.details == null ? 'N/A' : nda.details }}
+                    </div>
+                  </q-card-section>
+
+                  <q-list class="col-2">
+                    <q-item>
+                      <q-item-section avatar>
+                        <q-icon color="primary" name="pin_drop" />
+                      </q-item-section>
+
+                      <q-item-section>
+                        <q-item-label>Acreage (Size)</q-item-label>
+                        <q-item-label caption>{{ nda.acreage == null ? 'N/A' : nda.acreage }}</q-item-label>
+                      </q-item-section>
+                    </q-item>
+                    <q-item>
+                      <q-item-section avatar>
+                        <q-icon color="primary" name="explore" />
+                      </q-item-section>
+
+                      <q-item-section>
+                        <q-item-label>Center GPS</q-item-label>
+                        <q-item-label caption>{{ nda.centergps == null ? 'N/A' : nda.centergps }}</q-item-label>
+                      </q-item-section>
+                    </q-item>
+                    <q-item>
+                      <q-item-section avatar>
+                        <q-icon color="primary" name="explore" />
+                      </q-item-section>
+
+                      <q-item-section>
+                        <q-item-label>Corner GPS</q-item-label>
+                        <q-item-label caption>{{ nda.cornergps == null ? 'N/A' : nda.cornergps }}</q-item-label>
+                      </q-item-section>
+                    </q-item>
+                  </q-list>
+                </q-card-section>
+                <q-separator />
+                <q-card-actions class="justify-around col-2">
+                  <q-btn flat color="blue" icon="content_copy" @click="viewMore(nda)">View More...</q-btn>
+                  <q-btn v-if="!nda.approved" flat color="accent" icon="check_circle_outline" @click="onApproved(nda.landid)">Approve</q-btn>
+                  <q-btn v-else flat color="red" icon="cancel" @click="onUnApproved(nda.landid)">Un-approve</q-btn>
+                </q-card-actions>
+              </q-card>
+            </div>
+          </q-tab-panel>
+        </q-tab-panels>
       </q-card>
 
 
@@ -303,35 +420,35 @@
               height="400px"
               class="bg-white shadow-1 rounded-borders"
             >
-              <q-carousel-slide :name="1" class="column no-wrap flex-center">
+              <q-carousel-slide v-if="viewMoreData.thumbnail != 'null'" :name="1" class="column no-wrap flex-center">
                 <!-- <q-icon name="style" color="primary" size="56px" /> -->
                 <q-img :src="viewMoreData.thumbnail" class="" />
               </q-carousel-slide>
-              <q-carousel-slide :name="2" class="column no-wrap flex-center">
+              <q-carousel-slide v-if="viewMoreData.picture1 != 'null'" :name="2" class="column no-wrap flex-center">
                 <q-img :src="viewMoreData.picture1" class="my-thumbnail" />
               </q-carousel-slide>
-              <q-carousel-slide :name="3" class="column no-wrap flex-center">
+              <q-carousel-slide v-if="viewMoreData.picture2 != 'null'" :name="3" class="column no-wrap flex-center">
                 <q-img :src="viewMoreData.picture2" class="my-thumbnail" />
               </q-carousel-slide>
-              <q-carousel-slide :name="4" class="column no-wrap flex-center">
+              <q-carousel-slide v-if="viewMoreData.picture3 != 'null'" :name="4" class="column no-wrap flex-center">
                 <q-img :src="viewMoreData.picture3" class="my-thumbnail" />
               </q-carousel-slide>
-              <q-carousel-slide :name="5" class="column no-wrap flex-center">
+              <q-carousel-slide v-if="viewMoreData.picture4 != 'null'" :name="5" class="column no-wrap flex-center">
                 <q-img :src="viewMoreData.picture4" class="my-thumbnail" />
               </q-carousel-slide>
-              <q-carousel-slide :name="6" class="column no-wrap flex-center">
+              <q-carousel-slide v-if="viewMoreData.picture5 != 'null'" :name="6" class="column no-wrap flex-center">
                 <q-img :src="viewMoreData.picture5" class="my-thumbnail" />
               </q-carousel-slide>
-              <q-carousel-slide :name="7" class="column no-wrap flex-center">
+              <q-carousel-slide v-if="viewMoreData.picture6 != 'null'" :name="7" class="column no-wrap flex-center">
                 <q-img :src="viewMoreData.picture6" class="my-thumbnail" />
               </q-carousel-slide>
-              <q-carousel-slide :name="8" class="column no-wrap flex-center">
+              <q-carousel-slide v-if="viewMoreData.picture7 != 'null'" :name="8" class="column no-wrap flex-center">
                 <q-img :src="viewMoreData.picture7" class="my-thumbnail" />
               </q-carousel-slide>
-              <q-carousel-slide :name="9" class="column no-wrap flex-center">
+              <q-carousel-slide v-if="viewMoreData.picture8 != 'null'" :name="9" class="column no-wrap flex-center">
                 <q-img :src="viewMoreData.picture8" class="my-thumbnail" />
               </q-carousel-slide>
-              <q-carousel-slide :name="10" class="column no-wrap flex-center">
+              <q-carousel-slide v-if="viewMoreData.picture9 != 'null'" :name="10" class="column no-wrap flex-center">
                 <q-img :src="viewMoreData.picture9" class="my-thumbnail" />
               </q-carousel-slide>
             </q-carousel>
@@ -369,6 +486,9 @@ const loadingFindLand = ref(false)
 const loadingLandFindButton = ref(false)
 const slide = ref(1)
 const data = ref([])
+const tab = ref("approved")
+const approvedData = ref([])
+const notApprovedData = ref([])
 const viewMoreData = ref({})
 const approved = ref([])
 const useStore = useAdminStore()
@@ -415,45 +535,53 @@ const loadData = () => {
     { headers: { "Authorization": `Bearer ${token}` }, })
     .then((response) => {
       data.value = response.data.data.reverse()
+      console.log(response, "response found!")
+      console.log(response.data, "response.data found!")
       console.log(data.value, "lands found!")
+      approvedData.value = data.value.filter(obj => obj.approved === true);
+      notApprovedData.value = data.value.filter(obj => obj.approved === false);
+      // console.log(approvedData.value, "approveData found!")
+      // console.log(notApprovedData.value, "notApproveData found!")
     })
-    .catch(() => {
+    .catch((e) => {
+      console.log(e, "e found!")
       // if (HttpStatusCode.Unauthorized) {
       //   $router.push('/');
       //   $router.go();
       // }
-      $q.notify({
-        color: 'negative',
-        position: 'bottom',
-        message: 'Lands not found',
-        icon: 'report_problem'
-      })
+      // $q.notify({
+      //   color: 'negative',
+      //   position: 'bottom',
+      //   message: 'Lands not found',
+      //   icon: 'report_problem'
+      // })
     })
 }
 
 
-const onApproved = (landid) => {
+const onApproved = (landid_) => {
   const name = useStore.getFirstname + " " + useStore.getLastname
-  // console.log(token)
   var approvedbyid = name + " " + adminid
   const formData = {
     approved: true,
     approvedby: approvedbyid,
   }
+  console.log(formData, 'formData')
 
-  api.patch(`/admin/serve/lands/approve/${landid}`, formData,
+  console.log(landid_, 'landid_')
+  api.patch(`/admin/serve/lands/approve/${landid_}`, formData,
     { headers: { "Authorization": `Bearer ${token}` }, })
     .then((response) => {
-      console.log(response)
-      approved.value = response.data.data
-      // console.log(approved.value)
+      console.log(response, 'approve')
+      approved.value = response.data
+      console.log(approved.value, 'approve.value')
       $q.notify({
         color: 'green-4',
         textColor: 'white',
         icon: 'thumb_up',
         message: 'Approved successful'
       })
-      window.location.reload();
+      // window.location.reload();
     })
     .catch(() => {
       $q.notify({
@@ -462,9 +590,9 @@ const onApproved = (landid) => {
         message: 'Action not complete',
         icon: 'report_problem'
       })
-      window.location.reload();
     })
-}
+    window.location.reload();
+  }
 
 const onUnApproved = (landid) => {
   const name = useStore.getFirstname + " " + useStore.getLastname
@@ -487,7 +615,7 @@ const onUnApproved = (landid) => {
         icon: 'thumb_up',
         message: 'Unapproved successful'
       })
-      window.location.reload();
+      // window.location.reload();
     })
     .catch(() => {
       $q.notify({
@@ -496,8 +624,8 @@ const onUnApproved = (landid) => {
         message: 'Action not complete',
         icon: 'report_problem'
       })
-      window.location.reload();
     })
+    window.location.reload();
 }
 
 const onFind = () => {

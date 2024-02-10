@@ -3,109 +3,116 @@
     <div class="text-black text-h4">Users Inquiry Messages</div>
       <q-separator />
     <div class="q-gutter-y-md q-pt-md" full-width>
-      <q-card class="my-card" v-for="(da, index) in data" :key="index">
-        <q-card-section horizontal>
-          <q-card-section class="q-pt-xs col-8">
-            <div class="text-overline">
-              <div v-if="da.replied">
-                <q-icon color="green" name="verified" />
-                Replied
-              </div>
-              <div v-else color="yellow">
-                <q-icon color="red" name="cancel_schedule_send" />
-                Yet to reply
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-6">
-                <div class="text-h5 q-mt-sm q-mb-xs">Message</div>
-                <div class="text-caption text-grey">
-                  {{ da.message }}
-                </div>
-              </div>
-              <div class="col-6">
-                <div v-show="da.repliedmessage != '' || null">
-                  <div class="text-h5 q-mt-sm q-mb-xs">Reply</div>
-                  <div class="text-caption text-grey">
-                    {{ da.repliedmessage }}
-                  </div>
-                </div>
-              </div>
-            </div>
-          </q-card-section>
-
-          <q-list class="col-2">
-            <q-item>
-              <q-item-section avatar>
-                <q-icon color="primary" name="badge" />
-              </q-item-section>
-
-              <q-item-section>
-                <q-item-label>Name</q-item-label>
-                <q-item-label caption>{{ da.lastname}} {{ da.firstname }}</q-item-label>
-              </q-item-section>
-            </q-item>
-            <q-item>
-              <q-item-section avatar>
-                <q-icon color="primary" name="email" />
-              </q-item-section>
-
-              <q-item-section>
-                <q-item-label>Email</q-item-label>
-                <q-item-label caption>{{ da.email }}</q-item-label>
-              </q-item-section>
-            </q-item>
-            <q-item>
-              <q-item-section avatar>
-                <q-icon color="primary" name="phone" />
-              </q-item-section>
-
-              <q-item-section>
-                <q-item-label>Phone</q-item-label>
-                <q-item-label caption>{{ da.phone }}</q-item-label>
-              </q-item-section>
-            </q-item>
-          </q-list>
-
-          <q-card-actions vertical class="justify-around col-2">
-            <q-btn flat color="red" icon="content_copy" @click="copyTo(da.email)"> Copy Email</q-btn>
-            <q-btn v-if="!da.replied" flat color="accent" icon="reply" @click="replyUser()">Reply User</q-btn>
-          </q-card-actions>
-
-
-          <q-dialog v-model="replyUser_">
-            <q-card class="">
-              <q-card-section horizontal>
-                <q-card-section class="q-pt-xs">
-                  <div class="row q-pt-sm">
-                    <q-form @submit="onReplied(da.contactid)" @reset="onReset" class="">
-                      <div class="q-pa-md" >
-                        <q-input
-                          v-model="repliedmessage"
-                          filled
-                          type="textarea"
-                          hint="Enter your message"
-                          />
-                          <!-- class="fit" -->
-                      </div>
-                      <q-separator dark />
-                      <div class="col-12 q-pl-md">
-                        <q-btn align="right" :loading="loadingReply" class="bg-primary text-white" type="submit">Send</q-btn>
-                      </div>
-                    </q-form>
-                  </div>
-                </q-card-section>
-
-                <!-- <q-card-actions vertical class="justify-around col-2">
-                  <q-btn v-if="!da.replied" flat round color="accent" icon="reply" @click="onReplied(da.contactid)">Replied?</q-btn>
-                </q-card-actions> -->
-              </q-card-section>
-            </q-card>
-          </q-dialog>
-
-
+      <q-card v-if="data.length == 0" class="my-card text-center">
+        <q-card-section>
+          There is no Contact Us Message yet.
         </q-card-section>
       </q-card>
+      <div v-else>
+        <q-card class="my-card" v-for="(da, index) in data" :key="index">
+          <q-card-section horizontal>
+            <q-card-section class="q-pt-xs col-8">
+              <div class="text-overline">
+                <div v-if="da.replied">
+                  <q-icon color="green" name="verified" />
+                  Replied
+                </div>
+                <div v-else color="yellow">
+                  <q-icon color="red" name="cancel_schedule_send" />
+                  Yet to reply
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-6">
+                  <div class="text-h5 q-mt-sm q-mb-xs">Message</div>
+                  <div class="text-caption text-grey">
+                    {{ da.message }}
+                  </div>
+                </div>
+                <div class="col-6">
+                  <div v-show="da.repliedmessage != '' || null">
+                    <div class="text-h5 q-mt-sm q-mb-xs">Reply</div>
+                    <div class="text-caption text-grey">
+                      {{ da.repliedmessage }}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </q-card-section>
+
+            <q-list class="col-2">
+              <q-item>
+                <q-item-section avatar>
+                  <q-icon color="primary" name="badge" />
+                </q-item-section>
+
+                <q-item-section>
+                  <q-item-label>Name</q-item-label>
+                  <q-item-label caption>{{ da.lastname}} {{ da.firstname }}</q-item-label>
+                </q-item-section>
+              </q-item>
+              <q-item>
+                <q-item-section avatar>
+                  <q-icon color="primary" name="email" />
+                </q-item-section>
+
+                <q-item-section>
+                  <q-item-label>Email</q-item-label>
+                  <q-item-label caption>{{ da.email }}</q-item-label>
+                </q-item-section>
+              </q-item>
+              <q-item>
+                <q-item-section avatar>
+                  <q-icon color="primary" name="phone" />
+                </q-item-section>
+
+                <q-item-section>
+                  <q-item-label>Phone</q-item-label>
+                  <q-item-label caption>{{ da.phone }}</q-item-label>
+                </q-item-section>
+              </q-item>
+            </q-list>
+
+            <q-card-actions vertical class="justify-around col-2">
+              <q-btn flat color="red" icon="content_copy" @click="copyTo(da.email)"> Copy Email</q-btn>
+              <q-btn v-if="!da.replied" flat color="accent" icon="reply" @click="replyUser()">Reply User</q-btn>
+            </q-card-actions>
+
+
+            <q-dialog v-model="replyUser_">
+              <q-card class="">
+                <q-card-section horizontal>
+                  <q-card-section class="q-pt-xs">
+                    <div class="row q-pt-sm">
+                      <q-form @submit="onReplied(da.contactid)" @reset="onReset" class="">
+                        <div class="q-pa-md" >
+                          <q-input
+                            v-model="repliedmessage"
+                            filled
+                            type="textarea"
+                            hint="Enter your message"
+                            />
+                            <!-- class="fit" -->
+                        </div>
+                        <q-separator dark />
+                        <div class="col-12 q-pl-md">
+                          <q-btn align="right" :loading="loadingReply" class="bg-primary text-white" type="submit">Send</q-btn>
+                        </div>
+                      </q-form>
+                    </div>
+                  </q-card-section>
+
+                  <!-- <q-card-actions vertical class="justify-around col-2">
+                    <q-btn v-if="!da.replied" flat round color="accent" icon="reply" @click="onReplied(da.contactid)">Replied?</q-btn>
+                  </q-card-actions> -->
+                </q-card-section>
+              </q-card>
+            </q-dialog>
+
+
+          </q-card-section>
+        </q-card>
+      </div>
 
 
     </div>

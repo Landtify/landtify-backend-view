@@ -6,43 +6,50 @@
       <div align="right">
         <q-btn rounded color="blue" class="q-mr-md" to="/create-ads">Post Ads</q-btn>
       </div>
-      <q-card class="my-ads" v-for="(da, index) in data" :key="index">
-        <q-carousel transition-prev="slide-right" transition-next="slide-left" swipeable animated v-model="slide"
-          control-color="primary" navigation-icon="radio_button_unchecked" navigation padding height="600px"
-          class="bg-white shadow-1 rounded-borders">
-          <q-carousel-slide :name="1" class="column no-wrap flex-center">
-            <q-img :src="da.picture1" class="my-thumbnail" />
-          </q-carousel-slide>
-          <q-carousel-slide :name="2" class="column no-wrap flex-center">
-            <q-img :src="da.picture2" class="my-thumbnail" />
-          </q-carousel-slide>
-          <q-carousel-slide :name="3" class="column no-wrap flex-center">
-            <q-img :src="da.picture3" class="my-thumbnail" />
-          </q-carousel-slide>
-          <q-carousel-slide :name="4" class="column no-wrap flex-center">
-            <q-img :src="da.picture4" class="my-thumbnail" />
-          </q-carousel-slide>
-          <q-carousel-slide :name="5" class="column no-wrap flex-center">
-            <q-img :src="da.picture5" class="my-thumbnail" />
-          </q-carousel-slide>
-          <q-carousel-slide :name="6" class="column no-wrap flex-center">
-            <q-img :src="da.picture6" class="my-thumbnail" />
-          </q-carousel-slide>
-          <q-carousel-slide :name="7" class="column no-wrap flex-center">
-            <q-img :src="da.picture7" class="my-thumbnail" />
-          </q-carousel-slide>
-          <q-carousel-slide :name="8" class="column no-wrap flex-center">
-            <q-img :src="da.picture8" class="my-thumbnail" />
-          </q-carousel-slide>
-          <q-carousel-slide :name="9" class="column no-wrap flex-center">
-            <q-img :src="da.picture9" class="my-thumbnail" />
-          </q-carousel-slide>
-          <q-carousel-slide :name="10" class="column no-wrap flex-center">
-            <q-img :src="da.picture10" class="my-thumbnail" />
-          </q-carousel-slide>
-        </q-carousel>
-        <div class="text-black text-center text-h4">{{ da.adsid }}</div>
+      <q-card v-if="data.length == 0" class="my-card text-center">
+        <q-card-section>
+          There is no Ads available yet.
+        </q-card-section>
       </q-card>
+      <div v-else>
+        <q-card class="my-ads" v-for="(da, index) in data" :key="index">
+          <q-carousel transition-prev="slide-right" transition-next="slide-left" swipeable animated v-model="slide"
+            control-color="primary" navigation-icon="radio_button_unchecked" navigation padding height="600px"
+            class="bg-white shadow-1 rounded-borders">
+            <q-carousel-slide v-if="viewMoreData.picture1 != 'null'" :name="1" class="column no-wrap flex-center">
+              <q-img :src="da.picture1" class="my-thumbnail" />
+            </q-carousel-slide>
+            <q-carousel-slide v-if="viewMoreData.picture2 != 'null'" :name="2" class="column no-wrap flex-center">
+              <q-img :src="da.picture2" class="my-thumbnail" />
+            </q-carousel-slide>
+            <q-carousel-slide v-if="viewMoreData.picture3 != 'null'" :name="3" class="column no-wrap flex-center">
+              <q-img :src="da.picture3" class="my-thumbnail" />
+            </q-carousel-slide>
+            <q-carousel-slide v-if="viewMoreData.picture4 != 'null'" :name="4" class="column no-wrap flex-center">
+              <q-img :src="da.picture4" class="my-thumbnail" />
+            </q-carousel-slide>
+            <q-carousel-slide v-if="viewMoreData.picture5 != 'null'" :name="5" class="column no-wrap flex-center">
+              <q-img :src="da.picture5" class="my-thumbnail" />
+            </q-carousel-slide>
+            <q-carousel-slide v-if="viewMoreData.picture6 != 'null'" :name="6" class="column no-wrap flex-center">
+              <q-img :src="da.picture6" class="my-thumbnail" />
+            </q-carousel-slide>
+            <q-carousel-slide v-if="viewMoreData.picture7 != 'null'" :name="7" class="column no-wrap flex-center">
+              <q-img :src="da.picture7" class="my-thumbnail" />
+            </q-carousel-slide>
+            <q-carousel-slide v-if="viewMoreData.picture8 != 'null'" :name="8" class="column no-wrap flex-center">
+              <q-img :src="da.picture8" class="my-thumbnail" />
+            </q-carousel-slide>
+            <q-carousel-slide v-if="viewMoreData.picture9 != 'null'" :name="9" class="column no-wrap flex-center">
+              <q-img :src="da.picture9" class="my-thumbnail" />
+            </q-carousel-slide>
+            <q-carousel-slide v-if="viewMoreData.picture10 != 'null'" :name="10" class="column no-wrap flex-center">
+              <q-img :src="da.picture10" class="my-thumbnail" />
+            </q-carousel-slide>
+          </q-carousel>
+          <div class="text-black text-center text-h4">{{ da.adsid }}</div>
+        </q-card>
+      </div>
 
     </div>
   </q-page>

@@ -1,11 +1,11 @@
 <template>
   <q-page class="q-pa-md">
-    <!-- <div class="text-black text-h4">Private Lender</div>
+    <!-- <div class="text-black text-h4">Normal User(Customers)</div>
       <q-separator /> -->
     <div class="q-gutter-y-md q-pt-md" full-width>
       <q-table
         class="my-sticky-header-table"
-        title="Private Lender"
+        title="Direct Buyer"
         :rows="data"
         row-key="name"
         flat
@@ -232,22 +232,22 @@
                 {{ viewMoreData.followers }}
               </div>
             </q-card-section>
-              <q-card-section class="q-pt-none text-center">
-                <div class="text-subtitle1">
-                  Wallet ID:
-                </div>
-                <div class="text-caption text-grey">
-                  {{ viewMoreData.walletid }}
-                </div>
-              </q-card-section>
-              <q-card-section class="q-pt-none text-center">
-                <div class="text-subtitle1">
-                  Wallet Amount:
-                </div>
-                <div class="text-caption text-grey">
-                  {{ viewMoreData.walletamount }}
-                </div>
-              </q-card-section>
+            <q-card-section class="q-pt-none text-center">
+              <div class="text-subtitle1">
+                Wallet ID:
+              </div>
+              <div class="text-caption text-grey">
+                {{ viewMoreData.walletid }}
+              </div>
+            </q-card-section>
+            <q-card-section class="q-pt-none text-center">
+              <div class="text-subtitle1">
+                Wallet Amount:
+              </div>
+              <div class="text-caption text-grey">
+                {{ viewMoreData.walletamount }}
+              </div>
+            </q-card-section>
 
             <q-separator />
 
@@ -312,11 +312,11 @@ function copyTo(ID) {
 const loadData = () => {
   // const token = useStore.getToken
   console.log(token, "token");
-  api.get(`/user/privatelender/all`,
+  api.get(`/user/direct_buyer/all`,
     { headers: { "Authorization": `Bearer ${token}` }, })
     .then((response) => {
       data.value = response.data.data.reverse()
-      console.log(data.value, "Private lender!")
+      console.log(data.value, "Normal User!")
     })
     .catch(() => {
       // if (HttpStatusCode.Unauthorized) {
@@ -331,6 +331,7 @@ const loadData = () => {
       })
     })
 }
+
 
 watch(() => {
   var decoded = useStore.checkToken(token);

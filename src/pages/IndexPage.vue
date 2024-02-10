@@ -9,9 +9,9 @@
       <h4>
         LANDTIFYING YOUR DREAMS AT YOUR FINGER TIPS!
       </h4>
-      <h6>
+      <!-- <h6>
         $1 FOR EVERY1!
-      </h6>
+      </h6> -->
     </div>
       <!-- src="~assets/quasar-logo-vertical.svg" -->
   </q-page>

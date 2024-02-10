@@ -1,10 +1,107 @@
 <template>
   <q-page class="q-pa-md">
-    <div class="text-black text-h4">Photographer</div>
-      <q-separator />
+    <!-- <div class="text-black text-h4">Photographer</div>
+      <q-separator /> -->
     <div class="q-gutter-y-md q-pt-md" full-width>
+      <q-table
+        class="my-sticky-header-table"
+        title="Photographer"
+        :rows="data"
+        row-key="name"
+        flat
+        bordered
+        :visible-columns="[
+          'userid',
+          'firstname',
+          'lastname',
+          'email',
+          'username',
+          'usertype',
+          'phone',
+          'picture',
+          'businessname',
+          // 'walletid',
+          // 'walletamount',
+          'gender',
+          'dob',
+          'address',
+          'city',
+          'province',
+          'country',
+        ]"
+          :filter="filter"
+          >
+
+        <template v-slot:body="props">
+          <q-tr :props="props" @click="viewMore(props.row)">
+          <!-- <q-tr :props="props" @click="onRowClick(props.row)"> -->
+            <q-td key="userid" :props="props">
+              <q-badge color="green">
+                {{ props.row.userid }}
+              </q-badge>
+            </q-td>
+            <q-td key="firstname" :props="props">
+              {{ props.row.firstname }}
+            </q-td>
+            <q-td key="lastname" :props="props">
+              {{ props.row.lastname }}
+            </q-td>
+            <q-td key="email" :props="props">
+              {{ props.row.email }}
+            </q-td>
+            <q-td key="username" :props="props">
+              {{ props.row.username }}
+            </q-td>
+            <q-td key="usertype" :props="props">
+              <q-badge color="green">
+                {{ props.row.usertype }}
+              </q-badge>
+            </q-td>
+            <q-td key="phone" :props="props">
+              {{ props.row.phone }}
+            </q-td>
+            <q-td key="picture" :props="props">
+              <q-avatar
+                size="40px"
+              >
+                <img :src="props.row.picture">
+              </q-avatar>
+            </q-td>
+            <q-td key="businessname" :props="props">
+              {{ props.row.businessname }}
+            </q-td>
+            <q-td key="gender" :props="props">
+              {{ props.row.gender }}
+            </q-td>
+            <q-td key="dob" :props="props">
+              {{ props.row.dob }}
+            </q-td>
+            <q-td key="address" :props="props">
+              {{ props.row.address }}
+            </q-td>
+            <q-td key="city" :props="props">
+              {{ props.row.city }}
+            </q-td>
+            <q-td key="province" :props="props">
+              {{ props.row.province }}
+            </q-td>
+            <q-td key="country" :props="props">
+              {{ props.row.country }}
+            </q-td>
+          </q-tr>
+        </template>
+          <!-- :loading="true" -->
+        <template v-slot:top-right>
+          <q-input borderless dense debounce="300" v-model="filter" placeholder="Search">
+            <template v-slot:append>
+              <q-icon name="search" />
+            </template>
+          </q-input>
+        </template>
+      </q-table>
+
       <div class="q-pa-md row items-start q-gutter-md">
-        <q-card class="my-card" v-for="(user, index) in data" :key="index">
+        <!-- <q-card class="my-card" v-for="(user, index) in data" :key="index">
           <q-card-section class="bg-primary text-white">
             <div class="text-h6 text-center">
               <q-avatar size="100px">
@@ -31,7 +128,7 @@
           <q-card-actions align="right">
           <q-btn flat @click="viewMore(user)">See Details...</q-btn>
         </q-card-actions>
-        </q-card>
+        </q-card> -->
 
         <q-dialog v-model="card">
           <q-card class="my-card2">
@@ -232,38 +329,6 @@ const loadData = () => {
         message: 'Realtor not found',
         icon: 'report_problem'
       })
-    })
-}
-
-
-const onApproved = (landid) => {
-  // const token = useStore.getToken
-  console.log(token)
-  const formData = {
-    approvedby: adminid,
-  }
-
-  api.patch(`${base}/admin/serve/lands/approve/${landid}`, formData ,
-    { headers: { "Authorization": `Bearer ${token}` }, })
-    .then((response) => {
-      approved.value = response.data.data
-      console.log(approved.value)
-      $q.notify({
-        color: 'green-4',
-        textColor: 'white',
-        icon: 'thumb_up',
-        message: 'Approved successful'
-      })
-      window.location.reload();
-    })
-    .catch(() => {
-      $q.notify({
-        color: 'negative',
-        position: 'bottom',
-        message: 'Action not complete',
-        icon: 'report_problem'
-      })
-      window.location.reload();
     })
 }
 

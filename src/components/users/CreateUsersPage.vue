@@ -69,7 +69,9 @@
             <q-input required class="" v-model="country" outlined type="text" hint="Country" />
           </div>
           <div class="col-12 col-md-6 q-pl-md">
-            <q-select required outlined v-model="usertype" :options="optionsUserType" hint="User Type" />
+            <q-select outlined v-model="usertype" :options="optionsUserType" hint="User Type"
+              :rules="[val => (val && val.length > 0) || 'Please make a selection']"
+            />
           </div>
         </div>
         <div class="row q-pt-lg">
@@ -99,16 +101,17 @@ import { useRouter } from 'vue-router'
     'Female'
   ]
   const optionsUserType = [
-    'user',
-    'realtor',
-    'private_investor',
-    'broker',
-    'private_lender',
-    'title_company',
-    'mobile_notary',
-    'photographer',
-    'drone_operator',
-    'surveyor',
+    'Direct Buyer',
+    'Direct Seller',
+    'Realtor',
+    'Private Investor',
+    'Broker',
+    'Private Lender',
+    'Title Company',
+    'Mobile Notary',
+    'Photographer',
+    'Drone Operator',
+    'Surveyor',
   ]
 
 
@@ -155,7 +158,7 @@ const onSubmit = () => {
   fD.append("province", province.value);
   fD.append("country", country.value);
   fD.append("picture", picture.value);
-  // console.log(formData.value, 'formData')
+  // console.log(fD.value, 'formData')
   axios.post(`${base}/users/signup`, fD, {
     headers: { 'Content-Type': 'multipart/form-data' },
   })
@@ -169,6 +172,7 @@ const onSubmit = () => {
         message: data.value.message,
         icon: 'check'
       })
+      loadingCreateUser.value = false
       $router.push('/all-users')
     })
     .catch(() => {
@@ -178,8 +182,8 @@ const onSubmit = () => {
         message: data.value.message,
         icon: 'report_problem'
       })
+      loadingCreateUser.value = false
     })
-    loadingCreateUser.value = false
   }
 
 const onReset = () => {

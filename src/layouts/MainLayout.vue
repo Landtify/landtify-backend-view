@@ -370,12 +370,14 @@ export default {
         { icon: 'record_voice_over', text: 'User Questions', link: '/contactus-message' }
       ],
       links2: [
-        { icon: 'folder', text: 'User And Admin', link: '/all-users' },
+        { icon: 'folder', text: 'All Users', link: '/all-users' },
+        { icon: 'folder', text: 'All Admin', link: '/all-admin' },
         // { icon: 'restore', text: 'My Info', link: '/profile' },
-        { icon: fabYoutube, text: 'Admin', link: '/admin' },
-        { icon: fabYoutube, text: 'Users', link: '/user' },
+        // { icon: fabYoutube, text: 'Admin', link: '/admin' },
       ],
       links3: [
+        { icon: fabYoutube, text: 'Direct Buyer', link: '/direct-buyer' },
+        { icon: fabYoutube, text: 'Direct Seller', link: '/direct-seller' },
         { icon: 'local_movies', text: 'Realtors', link: '/realtors' },
         { icon: 'videogame_asset', text: 'Private Investor', link: '/privateinvestor' },
         { icon: 'live_tv', text: 'Broker', link: '/broker' },
