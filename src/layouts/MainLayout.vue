@@ -366,6 +366,7 @@ export default {
       links1: [
         { icon: 'home', text: 'Dashboard', link: '/dashboard' },
         { icon: 'whatshot', text: 'Lands', link: '/lands' },
+        { icon: 'chat', text: 'Chats', link: '/chats' },
         { icon: 'subscriptions', text: 'Ads', link: '/ads' },
         { icon: 'record_voice_over', text: 'User Questions', link: '/contactus-message' }
       ],

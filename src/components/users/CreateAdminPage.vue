@@ -98,7 +98,11 @@ import { useRouter } from 'vue-router'
     'Female'
   ]
   const optionsAdminType = [
-    'SuperAdmin'
+    'Super-Admin',
+    'Admin',
+    'Mini-Admin',
+    'Staff-Admin',
+    'Operation-Admin'
   ]
 
 const $q = useQuasar()

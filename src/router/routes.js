@@ -28,6 +28,7 @@ const routes = [
       { path: '/photographer', component: () => import('components/user/PhotographerPage.vue'), meta: { requireLogin: true } },
       { path: '/droneoperator', component: () => import('components/user/DroneOperatorPage.vue'), meta: { requireLogin: true } },
       { path: '/surveyor', component: () => import('components/user/SurveyorPage.vue'), meta: { requireLogin: true } },
+      { path: '/chats', component: () => import('components/chat/ChatPage.vue'), meta: { requireLogin: true } },
       // { path: '/admin', component: () => import('components/admin/AdminPage.vue'), meta: { requireLogin: true } },
       { path: '/create-ads', component: () => import('pages/CreateAdsPage.vue'), meta: { requireLogin: true } },
       { path: '/create-user', name: 'CreateUser', component: () => import('components/users/CreateUsersPage.vue'), meta: { requireLogin: true } },
