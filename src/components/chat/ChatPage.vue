@@ -600,7 +600,8 @@ const getHistory1 = async () => {
         clientId: msg.data.clientId,
         name: msg.name,
         data: msg.data.message,
-        type: msg.data.type || "sent",
+        type: msg.data.clientId == adminid ? "sent" : "received",
+        // type: msg.data.type || "sent",
       }))
       .reverse();
     // console.log(message1, "History messages1")
@@ -618,7 +619,8 @@ const subscribeToMessages1 = async (name) => {
         clientId: message.data.clientId,
         name: message.name,
         data: message.data.message,
-        type: message.data.type || "sent",
+        type: message.data.clientId == adminid ? "sent" : "received",
+        // type: message.data.type || "sent",
       });
       // console.log('message received for event ' + message.name);
       // console.log('message data:' + message.data);
@@ -660,13 +662,14 @@ const sendMessage1 = async (data) => {
       await channel1.value.publish(adminusername.value, {
         clientId: adminid, // Use your chosen clientId
         message: message1.value,
-        type: "sent",
+        type: adminid,
+        // type: "sent",
       });
       // await channel1.value.publish(adminusername.value, message1.value);
       // await channel1.value.publish(username.value, message1.value);
       message1.value = "";
       // subscribeToMessages1(data.name)
-      // getHistory1()
+      getHistory1();
       //   channel1.value.subscribe(name, message => {
       // // const subscribeToMessages1 = (name) => {
       // //   channel1.value.subscribe(name, message => {

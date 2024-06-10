@@ -11,9 +11,9 @@ import axios from "axios";
 // const api = axios.create({ baseURL: 'http://localhost:3000/api/v1' }) // local
 // const base = "http://localhost:3000/api/v1"
 const api = axios.create({
-  baseURL: "https://landtifybackend-production.up.railway.app/api/v1",
+  baseURL: "https://mylandtifybackend.up.railway.app/api/v1",
 }); // local
-const base = "https://landtifybackend-production.up.railway.app/api/v1";
+const base = "https://mylandtifybackend.up.railway.app/api/v1";
 
 export default boot(({ app }) => {
   // for use inside Vue files (Options API) through this.$axios and this.$api

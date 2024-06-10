@@ -7,7 +7,7 @@
         class="my-sticky-header-table"
         title="Broker"
         :rows="data"
-        row-key="name"
+        row-key="userid"
         flat
         bordered
         :visible-columns="[
